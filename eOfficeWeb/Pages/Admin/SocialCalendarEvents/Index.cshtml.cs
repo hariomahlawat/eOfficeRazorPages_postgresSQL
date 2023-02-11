@@ -20,7 +20,7 @@ namespace eOffice.Pages.Admin.SocialCalendarEvents
         }
         public void OnGet()
         {
-            SocialCalendarEvents = _unitOfWork.socialCalendar.GetAll().OrderBy(x => x.EventDate).Take(5) ;
+            SocialCalendarEvents = _unitOfWork.socialCalendar.GetAll().OrderBy(x => x.EventDate);
         }
     }
 }
