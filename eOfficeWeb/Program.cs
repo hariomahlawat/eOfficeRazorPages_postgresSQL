@@ -19,13 +19,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("DefaultConnection"),
-    sqlServerOptionsAction: sqlOptions =>
-    {
-        sqlOptions.EnableRetryOnFailure();
-    }
-    ));
+
+//builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+//    builder.Configuration.GetConnectionString("DefaultConnection"),
+//    sqlServerOptionsAction: sqlOptions =>
+//    {
+//        sqlOptions.EnableRetryOnFailure();
+//    }
+//    ));
+
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection"))
+    );
 
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -54,6 +59,8 @@ builder.Services.AddMemoryCache();
 
 
 var app = builder.Build();
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
