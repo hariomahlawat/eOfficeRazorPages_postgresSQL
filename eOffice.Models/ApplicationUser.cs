@@ -15,5 +15,6 @@ namespace eOffice.Models
         public string PersonalNumber { get; set; }
         public string? OfficeBranch { get; set; } = "None";
         public string? OfficeBranchSection { get; set; } = "None";
+        public bool? IsEnabled { get; set; } = true;
     }
 }
