@@ -1,0 +1,75 @@
+﻿@page
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@model eOfficeWeb.Pages.Admin.IncomingDak.AddCommentsModel
+@inject UserManager<ApplicationUser> UserManager
+@{
+	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<div class="row justify-content-center">
+	<div class="col-8 mb-3">
+		<div class="text-center">
+			
+			<h4 class="text-primary">Subject - @Model.Dak.Subject</h4>
+			<h6 class="text-secondary">Letter no - @Model.Dak.LetterNo dated @Model.Dak.LetterDate.ToString("dd/MM/yyyy")</h6>
+		</div>
+		
+		<hr />
+		@foreach (var comment in @Model.comments)
+		{
+			 <section class="" style="background-color: #eee;">
+					<figure class="bg-white p-3 rounded" style="border-left: .25rem solid #a34e78;">
+					  <blockquote class="blockquote pb-2">
+						<p>
+						  @comment.Comment
+						</p>
+					  </blockquote>
+					  <figcaption class="blockquote-footer mb-0 font-italic">
+						<strong>by</strong> @comment.ApplicationUserName <strong> | DateTime - </strong> @comment.DateTimeComment 
+					  </figcaption>
+					</figure>
+			</section>
+			<hr/>
+
+		}
+
+
+		<form method="post">
+			<h4 class="text-primary">Add a Comment</h4>
+			<input hidden asp-for="DakComments.ApplicationUserId" value="@userId" />
+			<input hidden asp-for="DakComments.DakId" value="@Model.Dak.Id" />
+			<input hidden asp-for="DakComments.ApplicationUserName" value="@UserManager.GetUserName(User)" />
+
+			<div class="mb-3 col-12">
+				<label asp-for="DakComments.Comment"></label>
+				<textarea asp-for="DakComments.Comment" class="form-control" ></textarea>
+				<span asp-validation-for="DakComments.Comment" class="text-danger"></span>
+			</div>
+			
+			<button  type="submit" class="btn btn-primary" style="width:150px;">Add</button>
+			<a asp-page="Detail" asp-route-id="@Model.Dak.Id"  class="btn btn-outline-secondary"  style="width:150px;"> Back to Dak View</a>
+		</form>
+
+
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts{
+	@{
+	<partial name="_ValidationScriptsPartial"/>
+	}
+}

@@ -1,0 +1,147 @@
+﻿@page
+@model eOfficeWeb.Pages.AppUser.AppEventCalendar.IndexModel
+@{    
+}
+
+
+    <link href="~/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
+    <link href="~/fullcalendar/fullcalendar.print.css" rel="stylesheet" media="print" />
+
+<div class="container">
+    <div class="row ">
+        <div class="col-12 justify-content-end text-start">
+            <span class="display-6 text-primary" @*style="font-family: 'Brush Script MT', cursive;"*@>Event Calendar</span>
+        </div>
+        
+        <hr/>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10">
+            <div id="calender"></div> 
+        </div>
+         <div class="col-lg-2">
+             <div class="row justify-content-center">
+             @if (User.Identity.IsAuthenticated)
+                {
+                    @*button for modal of marking dak*@
+                     <div class="col-auto">
+			            <a  class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalAddEvent" >
+				            <i class="fa-solid fa-circle-plus" style=""></i> Add Event
+			            </a>
+                    </div>
+                    <div class="col-auto">
+                        <a asp-page="/AppUser/AppEventCalendar/EventListView" class="btn btn-sm btn-outline-primary">
+				            List View
+			            </a>
+                    </div>
+                }
+             
+             
+			<!-- Modal for adding new event-->
+			<div class="modal fade" id="modalAddEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						  </div>
+
+						  <form method="post" enctype="multipart/form-data">
+						  <div class="modal-body">
+								<div class="mb-3 col-12">
+					                <label asp-for="EventCalendar.Subject"></label>
+					                <input asp-for="EventCalendar.Subject" class="form-control" />
+					                <span asp-validation-for="EventCalendar.Subject" class="text-danger"></span>
+				                </div>
+                                <div class="mb-3 col-12">
+					                <label asp-for="EventCalendar.Description"></label>
+					                <textarea asp-for="EventCalendar.Description" class="form-control" ></textarea>
+					                <span asp-validation-for="EventCalendar.Description" class="text-danger"></span>
+				                </div>
+                                <div class="mb-3 col-12">
+					                <label asp-for="EventCalendar.Start"></label>
+					                <input asp-for="EventCalendar.Start" textmode="DateTime" class="form-control" />
+					                <span asp-validation-for="EventCalendar.Start" class="text-danger"></span>
+				                </div>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label><input asp-for="EventCalendar.IsFullDay" type="checkbox" checked="checked" />  Is Full Day event</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-12">
+					                <label asp-for="EventCalendar.End"></label>
+					                <input asp-for="EventCalendar.End" textmode="DateTime" class="form-control" />
+					                <span asp-validation-for="EventCalendar.End" class="text-danger"></span>
+				                </div>
+                                <div class="form-group">
+                                    <label asp-for="EventCalendar.ThemeColor">Theme Color</label>
+                                    <select asp-for="EventCalendar.ThemeColor" class="form-control">
+                                        <option value="">Default</option>
+                                        <option value="red">Red</option>
+                                        <option value="blue">Blue</option>
+                                        <option value="black">Black</option>
+                                        <option value="green">Green</option>
+                                    </select>
+                                </div>
+
+
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button asp-page-handler="AddEvent" type="submit" class="btn btn-primary">Add Event</button>
+						  </div>
+						  </form>
+
+						</div>
+					  </div>
+					</div>
+			<!-- Modal ends -->
+            </div>
+
+            <div class="row">
+             <!-- card to display event details -->
+              <div class="card border-0" id="myModal" role="dialog">
+                 <div class="card-body">
+                    <div class="card-title display-6">
+                      <span id="eventTitle">Click an event to see deatils.</span>
+                    </div>
+                    <div class="card-text">
+                      <p id="pDetails"></p>
+                    </div>
+     
+                </div>
+              </div> @*card ends*@
+            </div>
+
+
+         </div> @*col ends*@
+    </div>
+
+    
+
+
+</div> @*container ends*@
+
+
+
+
+
+
+   
+
+
+ 
+@section Scripts{
+    
+    <script src="~/fullcalendar//fullcalendar.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/eventCalendar.js"></script>
+
+	@{
+    <partial name="_ValidationScriptsPartial"/>
+	}
+
+
+    
+}

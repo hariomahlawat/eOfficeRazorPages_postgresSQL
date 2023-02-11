@@ -1,0 +1,175 @@
+﻿@page
+@using eOffice.Utility
+@model eOfficeWeb.Pages.Admin.IncomingDak.UpsertModel
+@{
+	string coveringLetterUrl =  Model.localserver + Model.Dak.CoveringLetter;
+	string encl1Url = Model.localserver, encl2Url = Model.localserver, encl3Url = Model.localserver;
+	@if (@Model.Dak.Enclosure1 != null)
+	{
+		encl1Url = encl1Url + Model.Dak.Enclosure1;
+	}
+	@if (@Model.Dak.Enclosure2 != null)
+	{
+		encl2Url = encl2Url + Model.Dak.Enclosure2;
+	}
+	@if (@Model.Dak.Enclosure3 != null)
+	{
+		encl3Url = encl3Url + Model.Dak.Enclosure3;
+	}
+	string pdfpath = coveringLetterUrl;
+}
+
+@*//Unauthorised User*@
+@if (@Model.LoggedInUser.OfficeBranch == "None" || @Model.LoggedInUser.OfficeBranch == "All")
+{
+	<div class="justify-content-center text-center p-5">
+		
+		<span class="text-danger display-4 p-5">
+			You have not been assigned any office branch. Uploading / Editing of Dak is not avail for you.  <br/>
+			Please contact your Admin.
+	</div>
+}
+@*show the dak upload form*@
+else
+{
+	<form method="post" enctype="multipart/form-data">
+		<input asp-for="Dak.Id" hidden />
+		<div class="border p-3 mt-4">
+			<div class="row pb-2">
+				<div class="col-5">
+					<h2 class="text-primary">
+						<span class="text-primary pl-3 display-6" @*style="font-family: 'Brush Script MT', cursive;"*@>
+							@(Model.Dak.Id != 0 ? "Update" : "Upload") Incoming Dak (@Model.LoggedInUser.OfficeBranch)
+						</span>
+						 
+					</h2>
+					<hr />
+
+					<div class="row">
+						<div class="mb-3">
+						</div>
+						<div class="mb-3">
+							<label asp-for="Dak.Subject"></label>
+							<input asp-for="Dak.Subject" class="form-control" />
+							<span asp-validation-for="Dak.Subject" class="text-danger"></span>
+						</div>
+						<div class="mb-3 col-6">
+							<label asp-for="Dak.From"></label>
+							<input asp-for="Dak.From" class="form-control" />
+							<span asp-validation-for="Dak.From" class="text-danger"></span>
+						</div>
+						<div class="mb-3 col-6">
+							<label asp-for="Dak.OfficeSection">Office Section / Table</label>
+							<select asp-for="Dak.OfficeSection" class="form-control" asp-items="Model.selectListOfficeBranchSections">
+								<option value="" disabled selected>-- Select Office Section --</option>
+							</select>
+							<span asp-validation-for="Dak.OfficeSection" class="text-danger"></span>
+						</div>
+						<br />
+
+						<div class="mb-3 col-6">
+							<label asp-for="Dak.LetterNo"></label>
+							<input asp-for="Dak.LetterNo" class="form-control" />
+							<span asp-validation-for="Dak.LetterNo" class="text-danger"></span>
+						</div>
+						<div class="mb-3 col-6">
+							<label asp-for="Dak.LetterDate"></label>
+							<input asp-for="Dak.LetterDate" type="date" class="form-control" />
+							<span asp-validation-for="Dak.LetterDate" class="text-danger"></span>
+						</div>
+						<div class="mb-3 col-6">
+							<label asp-for="Dak.DateReceived"></label>
+							<input asp-for="Dak.DateReceived" type="date" class="form-control" />
+							<span asp-validation-for="Dak.DateReceived" class="text-danger"></span>
+						</div>
+
+
+
+						<div class="mb-3 col-6">
+							<label asp-for="Dak.CoveringLetter"></label>
+							<input type="file" name="coveringLetter" id="uploadBox" onchange="    readURL(this);" class="form-control" />
+						</div>
+
+
+
+						<div class="mb-3 col-4">
+							<label asp-for="Dak.Enclosure1"></label>
+							<input type="file" name="enclosure1" id="uploadBox" class="form-control" />
+						</div>
+						<div class="mb-3 col-4">
+							<label asp-for="Dak.Enclosure2"></label>
+							<input type="file" name="enclosure2" id="uploadBox" class="form-control" />
+						</div>
+						<div class="mb-3 col-4">
+							<label asp-for="Dak.Enclosure3"></label>
+							<input type="file" name="enclosure3" id="uploadBox" class="form-control" />
+						</div>
+
+						<div class="mb-3">
+							<label asp-for="Dak.Remarks"></label>
+							<input asp-for="Dak.Remarks" class="form-control" />
+							<span asp-validation-for="Dak.Remarks" class="text-danger"></span>
+						</div>
+					</div>
+					@if (Model.Dak.Id != 0)
+					{
+						<button type="submit" class="btn btn-primary" style="width:150px;">Update</button>
+					}
+					else
+					{
+						<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px;">Upload</button>
+					}
+					<a asp-page="Index" asp-route-id="01" class="btn btn-secondary" style="width:150px;"> Back to List</a>
+
+
+				</div>
+				<div class="col-7">
+					@if (Model.Dak.Id != 0)
+					{
+						<iframe id="myFrame" src="@coveringLetterUrl" width="100%" height="600px"> </iframe>
+					}
+					else
+					{
+						<iframe id="myFrame" src="" width="100%" height="600px"> </iframe>
+					}
+				</div>
+			</div>
+
+
+
+
+		</div>
+
+	</form>
+}
+
+
+
+
+
+@section Scripts{
+<script>
+	function ValidateInput(){
+		if(document.getElementById("uploadBox").value==""){
+			Swal.fire({
+			  icon: 'error',
+			  title: 'Oops...',
+			  text: 'It seems you forgot to upload a file!',
+			});
+			return false;
+		}
+		return true;
+	}
+
+	function readURL(input) { 
+        if (input.files && input.files[0]) {
+            src = URL.createObjectURL(event.target.files[0]);
+            document.getElementById("myFrame").src = src;
+		}
+	}
+
+</script>
+	@{
+	<partial name="_ValidationScriptsPartial" />
+	}
+}

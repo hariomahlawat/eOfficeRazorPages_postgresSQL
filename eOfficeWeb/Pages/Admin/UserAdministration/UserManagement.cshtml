@@ -1,0 +1,87 @@
+﻿@page
+@model eOfficeWeb.Pages.Admin.UserAdministration.UserManagementModel
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="text-primary display-5" @*style="font-family: 'Brush Script MT', cursive;"*@>User Administration : Manage Users</h4>
+            <hr/>
+
+            @*table for events*@
+            <div class="row">
+                <table id="tableDakList" class="table table-borderless" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="display:none">Id</th>
+                            <th></th>
+                        </tr>
+                   </thead>
+                   <tbody>
+                        @foreach (var obj in @Model.Users)
+                        {
+                            <tr>
+                                <td style="display:none">@obj.Id</td>
+                                <td>
+                                    <div class="card-body border">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <center>
+                                                    <img class="img-fluid" src="~/images/generaluser.png" style="max-width:55px">
+                                                </center>
+                                            </div>
+                                            <div class="col-md-3 mx-1">
+                                                <span class="fs-6" style="word-wrap: break-word">
+                                                    <strong>Username : @obj.UserName </strong><br />
+                                                    Rank : @obj.Rank <br />
+                                                    Name : @obj.FirstName  @obj.LastName <br />
+                                                    
+                                                </span>
+                                            </div>
+                                            <div class="col-md-2 mx-1" style="word-wrap: break-word">
+                                                <span class="fs-6">
+                                                    <strong>Roles Assigned</strong>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-2 mx-1" style="word-wrap: break-word">
+                                                <span class="fs-6">
+                                                    <strong>Claims Assigned</strong> <br/>
+                                                    Office Branch : @obj.OfficeBranch <br/>
+                                                    Office Section : @obj.OfficeBranchSection <br/>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-2 mx-1" style="word-wrap: break-word">
+                                                <a asp-page="/Admin/UserAdministration/EditUser" asp-route-id="@obj.Id" class="btn btn-sm btn-primary">
+                                                    Edit User
+                                                </a> <br/>
+			                                     <a asp-page="/Admin/UserAdministration/EditOfficeSection" asp-route-userId="@obj.Id" class="btn btn-sm btn-outline-primary my-1">
+                                                    Edit Office Section
+                                                </a>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </td>                            
+                            </tr>
+                        }
+                   </tbody>
+                </table>
+
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
+
+
+
+    @section Scripts{
+        <script src="~/js/dak.js"></script>
+
+    }

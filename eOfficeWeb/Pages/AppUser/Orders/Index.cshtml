@@ -1,0 +1,57 @@
+﻿@page
+@model eOfficeWeb.Pages.AppUser.Orders.IndexModel
+@{
+}
+
+
+<div class="container">
+    @*display the order here*@
+    <span class="display-6 text-primary" @*style="font-family: 'Brush Script MT', cursive;"*@> Add or Edit the Orders</span>
+    <div class="row">
+        <div class="card border-0 ">
+            <div class="card-body p-3 fs-6">
+                @if (@Model.OrdersToday!=null)
+                {
+                    @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.OrdersToday.Order))
+                }
+                
+            </div>
+        </div>
+    </div>
+    @*Create/Edit the orders*@
+    <div class="row">
+        <form method="post">
+            <div class="mb-3 col-12">
+			    <label asp-for="OrdersToday.Order"></label>
+				<textarea id="mytextarea" asp-for="OrdersToday.Order" class="form-control" ></textarea>
+				<span asp-validation-for="OrdersToday.Order" class="text-danger"></span>
+			</div>
+            <button  type="submit" class="btn btn-lg btn-success" >Publish Orders</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+@section Scripts{
+<script src="/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+      tinymce.init({
+        selector: '#mytextarea',
+        branding: false,
+        //plugins: "textcolor linkchecker  permanentpen  table spellchecker",
+        //toolbar: "forecolor backcolor linkchecker  permanentpen  table spellchecker "
+      });
+</script>
+
+	@{
+	<partial name="_ValidationScriptsPartial" />
+	}
+}

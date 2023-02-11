@@ -1,0 +1,97 @@
+﻿@page
+@using System.Security.Claims
+@model eOfficeWeb.Pages.AppUser.UserToDoList.IndexModel
+@{
+	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<div class="container p-3	">
+	<div class="row">
+	@*view todo list*@
+	<div class="col-md-8">
+	<div class="row justify-content-center">
+		<div class="col-12">
+			<h4 class="text-primary display-5" @*style="font-family: 'Brush Script MT', cursive;"*@>To Do List</h4>	
+			<div class="row">	
+				@foreach(var obj in @Model.ToDoLists)
+				{
+					<div class="col-auto col-6">
+					<div class="card shadow-sm my-2">
+					  <div class="card-body">
+						<blockquote class="blockquote mb-0">
+							<div class="">
+							  <p>@obj.Task</p>
+							  <span class="" style="float:right">
+								<form method="post">
+								<div class="w-50 btn-group" role="group">
+									<button type="submit" asp-page-handler="Delete" asp-route-id="@obj.Id" class="btn btn-sm btn-danger mx-2">
+									 <i class="fa-solid fa-trash-can"></i> 
+									</button>
+								</div>
+								</form>
+							  </span>
+							</div>
+						@if (obj.CompletionTime.Date.ToString("dd MMMM yyyy")!="01 January 0001")
+						{
+												@if (obj.CompletionTime < DateTime.Now)
+												{
+													<footer class="blockquote-footer text-danger" >To be completed by <cite title="Source Title">@obj.CompletionTime.ToString("dddd, dd MMMM yyyy hh:mm tt")</cite></footer>
+												}
+												else
+												{
+													<footer class="blockquote-footer text-primary">To be completed by <cite title="Source Title">@obj.CompletionTime.ToString("dddd, dd MMMM yyyy hh:mm tt")</cite></footer>
+												}
+												
+						}
+						else
+						{
+							<footer class="blockquote-footer text-success" >No deadline for the task.</footer>
+						}
+						  
+						</blockquote>
+					  </div>
+					</div>
+					</div>
+				}
+				</div>
+	
+
+
+
+
+	</div>
+</div>
+		</div>
+
+		@*create todo list*@
+		<div class="col-md-4 px-2 border border-top-0 border-bottom-0 ">
+			<div class="card border-0 my-2">
+			<div class="card-body">
+			<form method="post">
+				<h4 class="text-black display-6"><i class="fa-solid fa-circle-plus"></i> Add a new task to list</h4>
+				<input hidden asp-for="ToDoList.ApplicationUserId" value="@userId" />
+
+				<div class="mb-3 col-12">
+					<label asp-for="ToDoList.Task"></label>
+					<textarea asp-for="ToDoList.Task" class="form-control" ></textarea>
+					<span asp-validation-for="ToDoList.Task" class="text-danger"></span>
+				</div>
+				<div class="mb-3 col-12">
+					<label asp-for="ToDoList.CompletionTime"></label>
+					<input asp-for="ToDoList.CompletionTime" textmode="DateTime" class="form-control" />
+					@*<span asp-validation-for="ToDoList.CompletionTime" class="text-danger"></span>*@
+				</div>
+				<button  type="submit" class="btn btn-success" style="width:100px;">Add</button>
+
+				
+			</form>
+			</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+@section Scripts{
+	<script src="~/js/todolist.js"></script>
+}

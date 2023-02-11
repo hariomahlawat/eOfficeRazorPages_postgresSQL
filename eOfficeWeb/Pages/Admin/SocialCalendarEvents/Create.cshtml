@@ -1,0 +1,56 @@
+﻿@page
+@using eOffice.Models.Enums
+@model eOfficeWeb.Pages.Admin.SocialCalendarEvents.CreateModel
+@{
+}
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-8">
+
+<form method="post">
+	<div class=" p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary display-6" @*style="font-family: 'Brush Script MT', cursive;"*@>Add Social Calendar Event</h2>
+            <hr />
+		</div>
+		@*<div asp-validation-summary="All"></div>*@
+		<div class="row">
+			<div class="mb-3 col-12">
+				<label asp-for="SocialCalendar.Name"></label>
+				<input asp-for="SocialCalendar.Name" class="form-control" />
+				<span asp-validation-for="SocialCalendar.Name" class="text-danger"></span>
+			</div>
+			<div class="mb-3 col-6">
+				<label asp-for="SocialCalendar.EventDate"></label>
+				<input asp-for="SocialCalendar.EventDate" type="date" class="form-control" />
+				<span asp-validation-for="SocialCalendar.EventDate" class="text-danger"></span>
+			</div>
+			<div class="mb-3 col-6">
+				<label asp-for="SocialCalendar.EventType"></label>
+				@*<input asp-for="SocialCalendar.EventType" class="form-control" />*@
+				@*<select asp-for="SocialCalendar.EventType" asp-items="@Html.GetEnumSelectList<EventTypes>()" class="form-control" >
+						<option disabled>Choose Event Type</option>
+				</select>*@
+				<select asp-for="SocialCalendar.EventType" class="form-control">
+					<option disabled selected>Choose Event Type</option>
+					<option value="Birthday">Birthday</option>
+					<option value="Anniversary">Anniversary</option>
+				</select>
+				<span asp-validation-for="SocialCalendar.EventType"  class="text-danger"></span>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary" style="width:150px;">Add</button>
+		<a asp-page="Index" class="btn btn-outline-secondary"  style="width:150px;"> Back to List</a>
+	</div>
+	
+</form> 
+
+</div>
+</div>
+</div>
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial"/>
+	}
+}

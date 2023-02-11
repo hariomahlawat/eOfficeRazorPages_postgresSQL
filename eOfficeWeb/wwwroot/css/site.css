@@ -1,0 +1,41 @@
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+
+
+body {
+    margin-bottom: 65px;
+    font-size: .875rem;
+    margin-top: 65px;
+}
+
+
+/*
+ * Sidebar
+ */
+#sidebarMenu {
+    margin-top: 65px;
+    margin-bottom: 65px;
+}
+#rightBodyColumn {
+    margin-left:auto;
+}
+
+/*fontawesome icons fonts*/
+.fa-icon-innter-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+    text-align: left;
+}

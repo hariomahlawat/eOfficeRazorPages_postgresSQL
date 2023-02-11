@@ -1,0 +1,141 @@
+﻿@page
+@using eOffice.Utility
+@model eOfficeWeb.Pages.NoticeboardModel
+@{
+    string localserver = Model.localserver;
+    bool activeFlag = true;
+    int imageCount = 0;
+}
+
+<div class="container-fluid" >
+    
+    @*Top row*@
+    <div class="row "> @*style="min-height:600px; background-image: url('/images/blackboard_background.jpg');"*@
+        
+        @if (Model.CountSocialCalendarToday>0)
+        {
+            @*column for orders*@
+            <div class="col-md-9 col-auto">
+                <div class="card shadow">
+                    <div class="card-body" >
+                        <center>
+                        <h3 class="display-5  " @*style="font-family: 'Brush Script MT', cursive;"*@>Order for today</h3>
+                        </center>
+
+                        @*Carousel starts*@
+                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach (var image in Model.OrderImages)
+                                {
+                                    if (activeFlag)
+                                    {
+                                        activeFlag = false;
+                                        @*set active flag to false*@
+                                        string url = localserver + @image.ImgUrl;
+
+                                        <div class="carousel-item active" data-bs-interval="7000">
+                                            <center>
+                                                <img src="@url" class=" d-block" style="max-height:650px" alt="...">
+                                            </center>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        string url = localserver + @image.ImgUrl;
+                                        <div class="carousel-item" data-bs-interval="7000">
+                                            <center>
+                                                <img src="@url" class="d-block" style="max-height:650px" alt="...">
+                                            </center>
+                                        </div>
+                                    }
+                                }
+                            </div>  @*carousel-inner div*@
+                        </div> @*carousel outer div*@
+                        @*Carousel ends*@
+
+                    </div>
+
+                </div>
+            </div>
+
+            @*birthday card column *@
+            <div class="col-md-3 col-auto align-text-top">
+                <div class="card shadow">
+                    <div class="card-header bg-white text-center">
+                        <h3 class="fs-3  text-primary" @*style="font-family: 'Brush Script MT', cursive;"*@>
+                            Best Wishes from Commanding Officer and All ranks of 619 EME Bn
+                        </h3>
+                    </div>
+                    <div class="card-body" style="">
+                        @foreach (var socialCalendar in Model.SocialCalendarToday)
+                        {
+                            <h6 class="text-secondary">
+                                <i class="bi bi-balloon" style="color:red"></i><i class="bi bi-balloon" style="color:gold"></i>
+                                @socialCalendar.EventDate.ToString("dd MMMM ") - @socialCalendar.EventType of @socialCalendar.Name
+                            </h6>
+
+                            <br />
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+          <div class="col-12">
+            <center>
+                <h3 class="display-5  " @*style="font-family: 'Brush Script MT', cursive;"*@>Order for today</h3>
+            </center>
+          
+
+            @*Carousel starts*@
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach (var image in Model.OrderImages)
+                        {
+                            if (activeFlag)
+                            {
+                                activeFlag = false;
+                                @*set active flag to false*@
+                                string url = localserver + @image.ImgUrl;
+
+                                <div class="carousel-item active" data-bs-interval="7000">
+                                    <center>
+                                        <img src="@url" class=" d-block" alt="...">
+                                    </center>
+                                </div>   
+                            }
+                            else
+                            {
+                                string url = localserver + @image.ImgUrl;
+                                <div class="carousel-item" data-bs-interval="7000">
+                                    <center>
+                                        <img src="@url" class="d-block" alt="...">
+                                    </center>
+                                </div>
+                            }
+                        }
+                    </div>  @*carousel-inner div*@
+                </div> @*carousel outer div*@
+            @*Carousel ends*@
+
+          </div>
+        }
+    </div> 
+</div>
+
+
+@section Scripts{
+    <script>
+        jQuery(document).ready(function($) {
+	        $('.carousel').carousel({
+		        interval:2000
+	        })
+        });
+    </script>
+    
+
+	@{
+	<partial name="_ValidationScriptsPartial" />
+	}
+}

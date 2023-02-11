@@ -1,0 +1,114 @@
+﻿@page
+@using eOffice.Utility
+@model eOfficeWeb.Pages.AppUser.Orders.OrderImagesModel
+@{
+	string localserver = Model.localserver;
+}
+
+
+<div class="container">
+	<div class="row">
+		@*display images*@
+		<div class="col-8">
+			<div class="row">
+			@foreach (var image in Model.OrderImages)
+			{
+			<div class="col-auto col-6">
+				<div class="card my-2">
+					<div class="card-header text-center">
+						@image.Name
+					</div>
+					<div class="card-body ">
+						@{
+						string url =  @localserver + @image.ImgUrl;
+						}
+						<center>
+						<img src="@url" style="max-width:333px"></img>
+						</center>
+					</div>
+					<div class="card-footer ">
+						<span>
+									Uploaded on @image.UploadedOn.ToString("dd/mm/yyyy")
+						</span>
+						<form method="post">
+								<span>
+									<button type="submit" asp-page-handler="Delete" asp-route-id="@image.Id" class="btn btn-sm btn-danger mx-2">
+									 <i class="fa-solid fa-trash-can"></i> 
+									</button>
+								</span>
+						</form>
+					</div>
+				</div>
+			</div>			
+			}
+			</div>
+		</div>
+		
+		@*form to add image*@
+		<div class="col-4">
+			<form method="post" enctype="multipart/form-data">
+				<input asp-for="OrderImage.Id" hidden />
+				<div class="border p-3 mt-4">
+					<div class="row pb-2">
+						<div class="col-12">
+							<h2 class="text-primary">
+								<span class="text-primary pl-3 display-6" style="font-family: 'Brush Script MT', cursive;">
+									Add Order Images
+								</span>
+							</h2>
+							<hr />
+
+							<div class="row">
+								<div class="mb-3">
+									<label asp-for="OrderImage.Name"></label>
+									<input asp-for="OrderImage.Name" class="form-control" />
+									<span asp-validation-for="OrderImage.Name" class="text-danger"></span>
+								</div>
+
+								<div class="mb-3">
+									<label asp-for="OrderImage.ImgUrl"></label>
+									<input type="file" name="imageUpload" id="uploadBox" onchange="    readURL(this);" class="form-control" />
+								</div>
+
+								<button type="submit" class="btn btn-primary">Add Order Image</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<img id="myFrame" src="" width="100%" height="200px"> </img>
+
+		</div>
+	</div>
+</div>
+
+
+
+@section Scripts{
+<script>
+	function ValidateInput(){
+		if(document.getElementById("uploadBox").value==""){
+			Swal.fire({
+			  icon: 'error',
+			  title: 'Oops...',
+			  text: 'It seems you forgot to upload a file!',
+			});
+			return false;
+		}
+		return true;
+	}
+
+	function readURL(input) { 
+        if (input.files && input.files[0]) {
+            src = URL.createObjectURL(event.target.files[0]);
+            document.getElementById("myFrame").src = src;
+		}
+	}
+
+</script>
+	@{
+	<partial name="_ValidationScriptsPartial" />
+	}
+}
+

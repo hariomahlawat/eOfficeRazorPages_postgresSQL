@@ -1,0 +1,170 @@
+﻿@page
+@model eOfficeWeb.Pages.Admin.UserAdministration.ManageOfficeBranchModel
+@{
+}
+
+<div class="container p-3	">
+	<div class="row">
+	@*view office branch list*@
+	<div class="col-md-4">
+	<div class="row justify-content-center">
+		<div class="col-12">
+			<h4 class="text-primary display-5" @*style="font-family: 'Brush Script MT', cursive;"*@>Office Branches</h4>	
+			<div class="row">
+				@*table starts*@
+				<table id="tableDatatable" class="table " style="width:100%">
+					<thead>
+						<tr>
+							<th style="display:none">Id</th>
+							<th>Name</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+
+							
+					@foreach(var obj in @Model.OfficeBranches)
+					{
+						<tr>
+						<td style="display:none" width="0%" >@obj.Id</td>
+						<td >@obj.Name</td>
+						<td>
+							@if (!String.Equals(obj.Name, "All") && !String.Equals(obj.Name, "None"))
+							{
+								<span class="" style="float:right">
+								<form method="post">
+									<div class="w-50 btn-group" role="group">
+										<button onclick="return confirm('Are you sure you want to delete this Branch? All sections within this branch will also get deleted.');" 
+										type="submit" asp-page-handler="DeleteBranch" asp-route-id="@obj.Id" class="btn btn-sm btn-danger mx-2 delete">
+											<i class="fa-solid fa-trash-can"></i>
+										</button>
+									</div>
+								</form>
+								</span>				
+							}
+							
+						</td>
+						</tr>
+					}
+
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+	</div>
+
+		@*view office branch sections list*@
+		<div class="col-md-4">
+			<div class="row justify-content-center">
+				<div class="col-12">
+					<h4 class="text-primary display-5" @*style="font-family: 'Brush Script MT', cursive;"*@>Office Sections</h4>
+					<form method="get">
+						<input asp-for="OfficeBranchSection.Name" hidden value="test" class="form-control" />
+						<div class="mb-3 col-12">
+							<label asp-for="OfficeBranchSection.OfficeBranchId"></label>
+							<select asp-for="OfficeBranchSection.OfficeBranchId" asp-items="@Model.selectListOfficeBranches" class="form-control"></select>
+						</div>
+						<button asp-page="/Admin/UserAdministrator/ManageOfficeBranch" type="submit" class="btn btn-primary" style="width:auto;">View Sections</button>
+					</form>
+
+					<div class="row">
+						@*table starts*@
+						<table id="tableDatatable" class="table" style="width:100%">
+							<thead>
+								<tr>
+									<th style="display:none">Id</th>
+									<th>Name</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+
+								@if(Model.OfficeBranchSections != null)
+								{
+								@foreach (var obj in @Model.OfficeBranchSections)
+								{
+									<tr>
+										<td style="display:none" width="0%">@obj.Id</td>
+										<td>@obj.Name</td>
+										<td>
+											@if (!String.Equals(obj.Name, "All") && !String.Equals(obj.Name, "None"))
+												{
+													<span class="" style="float:right">
+														<form method="post">
+															<div class="w-50 btn-group" role="group">
+																<button onclick="return confirm('Are you sure you want to delete this section?');" 
+													type="submit" asp-page-handler="DeleteSection" asp-route-id="@obj.Id" class="btn btn-sm btn-danger mx-2">
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
+														</form>
+													</span>
+												}
+										</td>
+									</tr>
+								}
+								}
+								
+
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		@*create a new office branch*@
+		<div class="col-md-4 px-2 border border-top-0 border-bottom-0 ">
+			<div class="card border-0 my-2">
+			<div class="card-body">
+			<form method="post">
+				<h4 class="text-success display-6"><i class="fa-solid fa-circle-plus"></i> Office branch</h4>
+				<div class="mb-3 col-12">
+					<label asp-for="@Model.OfficeBranch.Name"></label>
+					<input asp-for="@Model.OfficeBranch.Name" class="form-control" />
+					<span asp-validation-for="@Model.OfficeBranch.Name" class="text-danger"></span>
+				</div>
+
+				<button asp-page-handler="AddBranch" type="submit" class="btn btn-success" style="width:100px;">Add</button>
+			</form>
+			<br/>
+			<hr style="border-top:dotted" />
+			<br/>
+
+			<form method="post">
+				<h4 class="text-success display-6"><i class="fa-solid fa-circle-plus"></i> Section within branch</h4>
+				<div class="mb-3 col-12">
+					<label asp-for="OfficeBranchSection.OfficeBranchId"></label>
+					<select asp-for="OfficeBranchSection.OfficeBranchId" asp-items="@Model.selectListOfficeBranches" class="form-control" ></select>
+					<span asp-validation-for="OfficeBranchSection.OfficeBranch" class="text-danger"></span>
+				</div>
+				<div class="mb-3 col-12">
+					<label asp-for="OfficeBranchSection.Name"></label>
+					<input asp-for="OfficeBranchSection.Name" class="form-control" />
+					<span asp-validation-for="OfficeBranchSection.Name" class="text-danger"></span>
+				</div>
+
+						<button asp-page-handler="AddBranchSection" type="submit" class="btn btn-success" style="width:100px;">Add</button>
+			</form>
+
+
+			</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+@section Scripts{
+	<script src="~/js/dataTable.js"></script>
+	<script>
+
+	</script>
+
+	@{
+	<partial name="_ValidationScriptsPartial" />
+	}
+}

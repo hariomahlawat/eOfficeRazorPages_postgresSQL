@@ -1,0 +1,92 @@
+﻿@page
+@model eOfficeWeb.Pages.Admin.UserAdministration.ManageRolesModel
+@using eOffice.Models
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="text-primary display-5" @*style="font-family: 'Brush Script MT', cursive;"*@>User Administration : Manage Roles</h4>
+            <hr/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4 fs-5">
+            @*table starts*@
+            <table id="tableDatatable" class="table " style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="display:none">Id</th>
+                        <th>Role Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                     @foreach (var obj in @Model.Roles)
+                     {
+                        @if (obj.Name != "SuperAdmin") // all roles except SuperAdmin
+                        {  <form method="get">
+                                <tr>
+                                    <input asp-for="IdentityRole.Id" hidden value="@obj.Id " />
+                                    <input asp-for="IdentityRole.Name" hidden value="@obj.Name " />
+                                    <td >@obj.Name</td>
+                                    <td>
+                                        <span class="" style="float:right">
+                                            <button  
+                                        type="submit" class="btn btn-sm btn-outline-primary mx-2">
+                                                Show Users
+                                            </button>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </form>
+                        }
+                    }
+                
+                </tbody>
+            </table>
+
+        </div>
+        @*col ends*@
+
+        @*List users for a given role*@
+        <div class="col-5 fs-5 border border-top-0 border-right-0 border-bottom-0">
+            @if (@Model.UserRoleModels != null && Model.Role != null)
+            {
+                <form method="post">
+                    <span class="display-6 fs-4 text-black"> Users given <strong>@Model.Role.Name</strong> role</span>
+                <hr/>
+                @if (Model.UserRoleModels.Any())
+                {
+                    for (int i = 0; i < Model.UserRoleModels.Count; i++)
+                        {
+                            <div class="form-check m-1">
+                                <input asp-for="UserRoleModels[i].UserId" value="@Model.UserRoleModels[i].UserId" hidden class="form-check-input" />
+                                <input asp-for="UserRoleModels[i].UserName" value="@Model.UserRoleModels[i].UserName" hidden class="form-check-input" />
+                                <input asp-for="UserRoleModels[i].IsSelected" checked="@Model.UserRoleModels[i].IsSelected" class="form-check-input" />
+                                <label class="form-check-label">
+                                    @Model.UserRoleModels[i].UserName
+                                </label>
+                            </div>
+                        }        
+                }
+                    <button asp-page="" , asp-page-handler="EditUsersInRole" asp-route-roleId="@Model.Role.Id"
+                        type="submit" class="btn btn-primary" style="width:auto;" >
+                        Update
+                </button>    
+
+				</form>
+            }
+            
+
+        </div>
+        <div class="col-3">
+            <p class="text-black fs-5 text-muted">
+                Admin can assign a role to any user or remove the user from a given role. A user can have multiple roles
+                simultaneously.
+            </p>
+        </div>
+    </div>
+</div>

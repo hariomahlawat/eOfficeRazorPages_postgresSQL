@@ -1,0 +1,354 @@
+﻿@page
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@using eOffice.Utility
+@model eOfficeWeb.Pages.AppUser.UserDakViewModel
+@inject UserManager<ApplicationUser> UserManager
+@{
+	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+	string localserver = Model.localserver;
+	string coveringLetterUrl =  localserver + Model.Dak.CoveringLetter;
+	string encl1Url=localserver, encl2Url=localserver, encl3Url = localserver;
+	@if (@Model.Dak.Enclosure1 != null)
+	{
+		encl1Url = encl1Url + Model.Dak.Enclosure1;
+	}
+	@if (@Model.Dak.Enclosure2 != null)
+	{
+		encl2Url = encl2Url + Model.Dak.Enclosure2;
+	}
+	@if (@Model.Dak.Enclosure3 != null)
+	{
+		encl3Url = encl3Url + Model.Dak.Enclosure3;
+	}
+}
+
+
+<div class="row">
+	@*Left column to show Dak*@
+	<div class="col-md-8">
+		@*Card to show Dak details/metadata*@
+		<div class="card">
+		  <div class="card-header">
+			<span class="text-center fs-5"> From - @Model.Dak.From dated @Model.Dak.LetterDate.ToString("dd/MM/yyyy") 
+			<span class="text-primary">|</span> Subject - @Model.Dak.Subject</span> 
+			
+
+			
+
+		  </div>
+		  <div class="card-body">
+			<span class="card-text">Recieved on @Model.Dak.DateReceived.ToString("dd/MM/yyyy") 
+				@if (Model.Dak.Remarks!="")
+					{
+						<span>| Remarks - @Model.Dak.Remarks</span>
+					} 
+			</span>
+			@if (@Model.Dak.Enclosure1 != null)
+					{
+						<a href="@encl1Url"  target="_blank"  class="btn btn-sm btn-outline-primary mx-2"  style="width:60px;"> Encl 1</a>
+					}
+					@if (@Model.Dak.Enclosure2 != null)
+					{
+						<a href="@encl2Url" target="_blank" class="btn btn-sm btn-outline-primary mx-2"  style="width:60px;"> Encl 2</a>
+					}
+					@if (@Model.Dak.Enclosure3 != null)
+					{
+						<a href="@encl3Url" target="_blank"  class="btn btn-sm btn-outline-primary mx-2"  style="width:60px;"> Encl 3</a>
+					}
+
+					<!-- Button to Open the Modal -->
+					<button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalDraft" style="float:right">
+					  Attach Draft
+					</button>
+					<!-- Vertically centered modal -->
+
+					<!-- Modal for draft letter attachment -->
+					<div class="modal fade" id="modalDraft" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Attach a draft</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						  </div>
+
+						  <form method="post" enctype="multipart/form-data">
+						  <div class="modal-body">
+								@*File input for draft letter*@
+								<input hidden asp-for="DraftLetter.ApplicationUserId" value="@userId" />
+								<input hidden asp-for="DraftLetter.DakId" value="@Model.Dak.Id" />
+								<input hidden asp-for="DraftLetter.ApplicationUserName" value="@UserManager.GetUserName(User)" />
+								<div class="mb-3 col-6">
+									<label asp-for="DraftLetter.DraftLetterUrl"></label>
+									<input  type="file" name="draftLetter" id="uploadBox" class="form-control" />
+								</div>
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button asp-page-handler="UploadDraftLetter" type="submit" class="btn btn-primary">Submit</button>
+						  </div>
+						  </form>
+
+						</div>
+					  </div>
+					</div>
+					<!-- Modal for draft letter attachment ends -->
+
+
+					@*link for draft letters*@
+					<div class="mx-2" style="display: inline">
+					@foreach (var draft in Model.DraftLetters)
+					{
+						<form method="post">
+						<span class="mx-2" >
+							<a href="@(localserver +draft.DraftLetterUrl)" target="_blank" class="fs-5" style="display: inline-block"> Draft by @draft.ApplicationUserName </a>
+							@if (draft.ApplicationUserId==userId)
+								{
+									<button type="submit" asp-page-handler="DeleteDraftLetter" asp-route-id="@draft.Id" class="btn btn-sm btn-danger mx-2" style="display: inline-block">
+									<i class="fa-solid fa-trash-can"></i> 
+									</button>
+								}
+							
+						</span>
+						
+						</form>
+					}
+					</div>
+		  </div>
+		</div>
+
+		@*Iframe to show covering letter*@
+		<iframe id="myFrame" runat="server"src="@coveringLetterUrl" width="100%" height="800" > </iframe>
+	</div>
+	
+
+	@*right column = comment section + action button*@
+	<div class="col-md-4">
+
+		<div class="row">
+			@*left column to show comments*@
+			<div class="col-md-10">
+				@*Card starts*@
+				<div class="card">
+		  <div class="card-header">
+			@*<a asp-page="Dashboard" class="btn btn btn-outline-primary " style="float: left;" > Dashboard</a> *@
+			<span class="text-center fw-bold fs-5">    Comment Section    </span>
+			<a asp-page="/Admin/IncomingDak/Index" asp-route-id="notSeen"   class="btn btn btn-outline-primary" style="float: right;" >
+				Not Seen Dak
+			</a>
+		  </div>
+		  <div class="card-body">
+			@*comment section starts*@
+			@foreach (var comment in @Model.Comments)
+			{
+				 <section class="" style="background-color: #eee;">
+						<figure class="bg-white px-3 rounded" style="border-left: .25rem solid #a34e78;">
+						  <blockquote class="blockquote pb-2">
+							  @comment.Comment
+						  </blockquote>
+						  <figcaption class="blockquote-footer mb-0 font-italic">
+							<strong>by</strong> @comment.ApplicationUserName <strong> | DateTime - </strong> @comment.DateTimeComment.ToString("dd MMMM yyyy hh:mm tt") 
+						  </figcaption>
+						</figure>
+				</section>
+				<hr/>
+			}
+			@*form to submit new comment*@
+
+			<form method="post">
+				<h5 class="text-primary">Add a Comment</h5>
+				<input hidden asp-for="DakComments.ApplicationUserId" value="@userId" />
+				<input hidden asp-for="DakComments.DakId" value="@Model.Dak.Id" />
+				<input hidden asp-for="DakComments.ApplicationUserName" value="@UserManager.GetUserName(User)" />
+
+				<div class="mb-3 col-12">
+					<label asp-for="DakComments.Comment"></label>
+					<textarea  asp-for="DakComments.Comment" class="form-control" ></textarea>
+					<span asp-validation-for="DakComments.Comment" class="text-danger"></span>
+				</div>
+				@if (Model.Dak.CoveringLetter!=null)
+					{
+						<button  type="submit" class="btn btn-success" style="width:100px;">Add</button>
+					}
+				
+			</form>
+
+
+		  </div>
+		</div>
+			</div>
+
+			@*right column for action buttons*@
+			<div class="col-md-2 align-content-center">
+
+				@*badges for marked dak*@
+				@if (@Model.MarkedDak != null)
+				{
+					<span class="text-black text-capitalize text-break">Dak Category</span>
+					@if (@Model.MarkedDak.OfficersToSee == true)
+					{
+						<span class="badge text-sm-center bg-primary text-break text-wrap">Officers to See</span>
+					}
+					@if (@Model.MarkedDak.SainikSammelan == true)
+					{
+						<span class="badge text-sm-center bg-primary text-break text-wrap">Sainik Sammelan</span>
+					}
+					@if (@Model.MarkedDak.RollCall == true)
+					{
+						<span class="badge text-sm-center bg-primary text-break text-wrap">RollCall</span>
+					}
+					<hr/>
+				}
+
+				@*badges for dak visibility*@
+				@if (@Model.DakVisibilityTag != null)
+				{
+					<span class="text-black text-capitalize text-break">Marked for</span>
+					@if (@Model.DakVisibilityTag.Cdr == true)
+					{
+						<span class="badge text-sm-center bg-danger text-break">Cdr</span> <br />
+					}
+					@if (@Model.DakVisibilityTag.DyCdr == true)
+					{
+						<span class="badge text-sm-center bg-success text-break">Dy Cdr</span> <br />
+					}
+					<hr/>
+				}
+
+				@*button for modal of marking dak*@
+				@if (User.IsInRole(SD.OfficerRole) || User.IsInRole(SD.SuperAdminRole))
+				{
+						<button type="button" class="btn btn-outline-primary my-1" data-bs-toggle="modal" data-bs-target="#modalDakCategory" style="float:right">
+						<i class=" fs-3 fa-solid fa-square-check " style="color:darkslategrey"> </i> Mark Category
+						</button>
+				}
+
+				@*button for modal of marking dak*@
+				@if ((User.IsInRole(SD.OfficerRole) || User.IsInRole(SD.SuperAdminRole)) && !User.IsInRole(SD.CommandingOfficerRole))
+				{
+					<button type="button" class="btn btn-outline-danger my-1" data-bs-toggle="modal" data-bs-target="#modalDakViewSelected" style="float:right">
+						<i class=" fs-3 fa-solid fa-square-check " style="color:darkslategrey"> </i> Mark Dak
+					</button>
+				}
+			
+				<!-- Modal for marking dak-->
+				<div class="modal fade" id="modalDakCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Mark Category for Letter</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							  </div>
+
+							  <form method="post" enctype="multipart/form-data">
+							  <div class="modal-body">
+									@*File input for draft letter*@
+									<input hidden asp-for="MarkedDak.Id" />
+									<input hidden asp-for="MarkedDak.DakId" value="@Model.Dak.Id" />
+
+									<div class="mb-3 col-6">
+										<label>
+											@Html.CheckBox("OfficersToSee")
+											Officers to See
+										</label>
+									</div>
+									<div class="mb-3 col-6">
+										<label>
+											@Html.CheckBox("SainikSammelan")
+											Sainik Sammelan
+										</label>
+									</div>
+									<div class="mb-3 col-6">
+										<label>
+											@Html.CheckBox("RollCall")
+											Roll Call
+										</label>
+									</div>
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button asp-page-handler="UpsertMarkedDak" type="submit" class="btn btn-primary">Mark</button>
+							  </div>
+							  </form>
+
+							</div>
+						  </div>
+						</div>
+				<!-- Modal for marking dak ends -->
+
+
+				<!-- Modal for dak visibility-->
+				<div class="modal fade" id="modalDakViewSelected" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Dak Visibility</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+
+							<form method="post" enctype="multipart/form-data">
+								<div class="modal-body">
+									@*File input for draft letter*@
+									<input hidden asp-for="DakVisibilityTag.Id" />
+									<input hidden asp-for="DakVisibilityTag.DakId" value="@Model.Dak.Id" />
+
+									<div class="mb-3 col-6">
+										<label>
+											@Html.CheckBox("Cdr")
+											Cdr
+										</label>
+									</div>
+									<div class="mb-3 col-6">
+										<label>
+											@Html.CheckBox("DyCdr")
+											Dy Cdr
+										</label>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									<button asp-page-handler="UpsertDakVisibilityTag" type="submit" class="btn btn-primary">Mark</button>
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</div>
+				<!-- Modal for dak visibility ends -->
+
+
+
+			</div>
+		</div>
+
+		
+
+	</div>
+</div>
+
+
+@section Scripts{
+<script>
+	function ValidateInput(){
+		if(document.getElementById("uploadBox").value==""){
+			Swal.fire({
+			  icon: 'error',
+			  title: 'Oops...',
+			  text: 'It seems you forgot to upload a file!',
+			});
+			return false;
+		}
+		return true;
+	}
+</script>
+<script src="/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+      tinymce.init({
+        selector: '#mytextarea'
+      });
+</script>
+
+	@{
+	<partial name="_ValidationScriptsPartial" />
+	}
+}

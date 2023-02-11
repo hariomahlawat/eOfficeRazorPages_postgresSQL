@@ -1,0 +1,127 @@
+﻿@page
+@using eOffice.Utility
+@model eOfficeWeb.Pages.AppUser.MarkedDakListViewModel
+@{
+}
+
+
+<div class="container">
+	<form method="post">
+				<div class="row">
+
+					@*button for daks - not seen, today dak, last one month, last six month, last one year and show all*@
+					<div class="col-9">
+
+						@*OTS burron*@
+						@if (Model.FlagOTS!=true)
+						{
+							<a asp-page="/AppUser/MarkedDakListView"  asp-route-markedType="OTS" class="btn btn-sm btn-outline-light text-black fs-6">
+									Officers To See <span class="badge bg-light text-black rounded-5">@Model.CountOfficersToSeeDak</span>
+							</a>
+						}
+						else
+						{
+							<a asp-page="/AppUser/MarkedDakListView"  asp-route-markedType="OTS" class="btn btn-sm btn-outline-light text-black fs-6" style="background-color:#ECAA81;">
+									Officers To See <span class="badge bg-light text-black rounded-5">@Model.CountOfficersToSeeDak</span>
+								</a>
+						}
+						
+						@*SS button*@
+						@if (Model.FlagSS != true)
+						{
+							<a asp-page="/AppUser/MarkedDakListView" asp-route-markedType="SS" class="btn btn-sm btn-outline-light text-black fs-6">
+									Sainik Sammelan <span class="badge bg-light text-black rounded-5">@Model.CountSainikSammelanDak</span>
+							</a>
+						}
+						else
+						{
+							<a asp-page="/AppUser/MarkedDakListView" asp-route-markedType="SS" class="btn btn-sm btn-outline-light text-black fs-6" style="background-color:#ECAA81;">
+									Sainik Sammelan <span class="badge bg-light text-black rounded-5">@Model.CountSainikSammelanDak</span>
+							</a>
+						}
+
+						@if (Model.FlagRollCall != true)
+						{
+							<a asp-page="/AppUser/MarkedDakListView" asp-route-markedType="RollCall" class="btn btn-sm btn-outline-light text-black fs-6">
+									Roll Call <span class="badge bg-light text-black rounded-5">@Model.CountRollCallDak</span>
+							</a>
+						}
+						else
+						{
+							<a asp-page="/AppUser/MarkedDakListView" asp-route-markedType="RollCall"  class="btn btn-sm btn-outline-light text-black fs-6" style="background-color:#ECAA81;">
+									Roll Call <span class="badge bg-light text-black rounded-5">@Model.CountRollCallDak</span>
+							</a>
+						}
+
+	
+					</div>
+
+					@*Add new button dak and header display*@
+					<div class="col-3 text-end">
+						@if (Model.FlagOTS == true)
+                        {
+							<span class="display-6 text-primary" @*style="font-family: 'Brush Script MT', cursive;"*@>Officers To See</span>
+						}
+						@if (Model.FlagSS == true)
+                        {
+							<span class="display-6 text-primary" @*style="font-family: 'Brush Script MT', cursive;"*@>Sainik Sammelan</span>
+						}
+						@if (Model.FlagRollCall == true)
+                        {
+							<span class="display-6 text-primary" @*style="font-family: 'Brush Script MT', cursive;"*@>Roll Call</span>
+						}
+						
+					</div>
+
+				</div>
+	
+	<hr style="margin-top:unset;color:#ECAA81; height: 2px;" />
+
+
+	<table id="tableDakList"  class="table table-striped" style="width:100%">
+		<thead>
+			<tr>
+				<th style="display:none">Id</th>
+				<th>From</th>
+				<th>Subject</th>
+				<th>Letter No</th>
+				<th>Dated</th>
+				<th>Date Received</th>
+				<th>Remarks</th>
+				
+				
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var obj in Model.Dak)
+			{
+				<tr>
+					<td style="display:none" width="0%" >@obj.Id</td>
+					<td>@obj.From</td>
+					<td style="width:40%">@obj.Subject</td>
+					<td>@obj.LetterNo</td>
+					<td>@obj.LetterDate.ToString("dd/MM/yyyy")</td>
+					<td>@obj.DateReceived.ToString("dd/MM/yyyy")</td>
+					<td>@obj.Remarks</td>
+					
+					<td>
+						<div class="w-75 btn-group" role="group">
+								<a asp-page="/AppUser/UserDakView" asp-route-id="@obj.Id"  class="btn btn-sm btn-success mx-2">
+							<i class="fa-solid fa-eye"></i> View
+						</a>
+
+						</div>
+					</td>
+				</tr>
+			}
+			
+		</tbody>
+	</table>
+	</form>
+</div>
+
+@section Scripts{
+	<script src="~/js/dak.js"></script>
+
+}

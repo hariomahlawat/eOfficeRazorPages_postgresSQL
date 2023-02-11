@@ -1,0 +1,15 @@
+How to do
+Step 1. Host the app.
+Step 2. Login as Admin
+	- configure branches
+	- allot branches and sections to users.
+
+
+
+1. Add a migration EF Core
+	
+	#add-migration "migration name"
+	#update-database
+
+2. 
+

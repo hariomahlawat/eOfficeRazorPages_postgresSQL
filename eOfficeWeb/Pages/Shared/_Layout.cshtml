@@ -1,0 +1,99 @@
+﻿@using eOffice.Utility
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - eOfficeWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/datatables/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="~/bootstrap-icons-1.9.1/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/toastr/toastr.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/eOfficeWeb.styles.css" asp-append-version="true" />
+   
+</head>
+<body>
+    <header>
+        <nav class="navbar fixed-top  navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fs-5">
+            <div class="container-fluid">
+                <a class="navbar-brand fs-3" asp-area="" asp-page="/Index" style="color:#ECAA81;">eOffice
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Noticeboard"><i class="fa-solid fa-chalkboard"></i> Noticeboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/AppUser/AppEventCalendar/Index"><i class="fa-solid fa-calendar-days" style="color:green"></i> Event Calendar</a>
+                        </li>
+                        @*<li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/AppUser/TechLibraryModule/Index"><i class="fa-solid fa-book-open" style="color:firebrick"></i> Tech Library</a>
+                        </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/AppUser/Dashboard"><i class="fa-solid fa-address-card" style="color:dodgerblue"></i> Dashboard</a>
+                        </li>
+                       
+                        @if (User.IsInRole(SD.AdminRole) || User.IsInRole(SD.SuperAdminRole ))
+                        {
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-black" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-gear" style="color:red"></i> Admin</a>
+                            <div class="dropdown-menu">
+                                <a class="nav-link text-dark" asp-area="" asp-route-id="notSeen"  asp-page="/Admin/IncomingDak/Index">Manage Dak</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/SocialCalendarEvents/Index">Social Calendar</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register User</a>
+                                <a class="nav-link text-dark" id="" asp-area="" asp-page="/Admin/UserAdministration/Usermanagement">Manage Users</a>
+                                <a class="nav-link text-dark" id="" asp-area="" asp-page="/Admin/UserAdministration/ManageOfficeBranch">Configure Office Brances</a>
+                                    <a class="nav-link text-dark" id="" asp-area="" asp-page="/Admin/UserAdministration/ManageRoles">Manage Roles</a>
+                            </div>
+                        </li>
+                        }
+                        @if (User.IsInRole(SD.ClerkRole) || User.IsInRole(SD.HeadClerkRole) || User.IsInRole(SD.SuperAdminRole))
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/IncomingDak/Upsert">Upload Dak</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-route-id="1"  asp-page="/Admin/IncomingDak/Index" asp-route-id="7">View Dak</a>
+                        </li>
+                        
+                        }
+                        
+
+
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="">
+            <partial name="_Notification" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted" style="z-index:101;background-color:white" >
+        <div class="container">
+            <span class="text-muted px-4">&copy; 2022 - eOffice - For any queries contact @@hariomahlawat - 8967888563</span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/toastr/toastr.min.js"></script>
+    <script src="~/sweetalert2/sweetalert2@11.js"></script>
+    <script src="~/fullcalendar/moment.min.js"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

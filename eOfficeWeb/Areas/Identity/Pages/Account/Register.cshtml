@@ -1,0 +1,85 @@
+﻿@page
+@model RegisterModel
+@using eOffice.Utility
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container">
+<div class="row justify-content-center">
+    <div class="col-md-6 mx-auto">
+        <div class="card shadow-lg">
+               <div class="card-body"> 
+
+                  <div class="row">
+                     <div class="col">
+                        <center>
+                           <h3>Create a new account</h3>
+                        </center>
+                     </div>
+                  </div>
+                  <hr/>
+        
+                  <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row ">
+            <div class="col-6 my-2 ">
+                <label asp-for="Input.Rank"></label>
+                <input asp-for="Input.Rank" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="Input.Rank" class="text-danger"></span>
+            </div>
+            <div class="col-6 my-2">
+                <label asp-for="Input.PersonalNumber"></label>
+                <input asp-for="Input.PersonalNumber" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="Input.PersonalNumber" class="text-danger"></span>
+            </div>
+
+            <div class="col-6 my-2">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control"  aria-required="true" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="col-6 my-2">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control"  aria-required="true" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            
+            <div class=" my-2">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="col-6 my-2">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="col-6 my-2">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="col-6 my-2">
+                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
+                    <option disabled selected>-Select Role-</option>
+                </select>
+            </div>
+            <div class=" my-2">
+
+                <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            </div>
+            
+        </div>
+        </form>
+                </div>
+        </div>
+    </div>
+        
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

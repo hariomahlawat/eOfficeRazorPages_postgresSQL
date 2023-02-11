@@ -1,0 +1,74 @@
+﻿@page
+@using eOffice.Utility
+@model eOfficeWeb.Pages.Admin.IncomingDak.DetailModel
+@{
+	string localserver = Model.localserver;
+	string coveringLetterUrl =  localserver + Model.Dak.CoveringLetter;
+	string encl1Url=localserver, encl2Url=localserver, encl3Url = localserver;
+	@if (@Model.Dak.Enclosure1 != null)
+	{
+		encl1Url = encl1Url + Model.Dak.Enclosure1;
+	}
+	@if (@Model.Dak.Enclosure2 != null)
+	{
+		encl2Url = encl2Url + Model.Dak.Enclosure2;
+	}
+	@if (@Model.Dak.Enclosure3 != null)
+	{
+		encl3Url = encl3Url + Model.Dak.Enclosure3;
+	}
+}
+
+<div class="row">
+    <div class="col-3 border p-3">
+			<input hidden asp-for="Dak.Id" />
+				<div class="row">
+					<h6 class="text-secondary pl-3">Subject : @Model.Dak.Subject</h6>
+					<hr />
+				</div>
+				<div class="row">
+						<p> 
+							<strong>Received From </strong>@Model.Dak.From<br/>
+							<strong>Letter No </strong>@Model.Dak.LetterNo dated @Model.Dak.LetterDate.ToString("dd/MM/yyyy") <br/>
+							<strong>Received on </strong>@Model.Dak.DateReceived.ToString("dd/MM/yyyy") <br/>
+							<strong>Office Section / Table - </strong>@Model.Dak.OfficeSection <br/>
+							<strong>Remarks - </strong>@Model.Dak.Remarks
+						 </p>
+				</div>
+				<div class="d-flex justify-content-center">
+
+					@if (@Model.Dak.Enclosure1 != null)
+					{
+						<a href="@encl1Url"  target="_blank"  class="btn btn-sm btn-info mx-2"  style="width:60px;"> Encl 1</a>
+					}
+					@if (@Model.Dak.Enclosure2 != null)
+					{
+						<a href="@encl2Url" target="_blank" class="btn btn-sm btn-info mx-2"  style="width:60px;"> Encl 2</a>
+					}
+					@if (@Model.Dak.Enclosure3 != null)
+					{
+						<a href="@encl3Url" target="_blank"  class="btn btn-sm btn-info mx-2"  style="width:60px;"> Encl 3</a>
+					}
+				</div>
+				<div class="mt-2 justify-content-center">
+					<a asp-page="AddComments" asp-route-id="@Model.Dak.Id" class="btn btn btn-primary"> Add Comment</a>
+
+					<a asp-page="Index" class="btn btn btn-outline-secondary" > Back to List</a>
+				</div>
+				
+				<hr/>
+				<div id="test" >
+					@*@await Component.InvokeAsync("DakComments", new{ id = @Model.Dak.Id});*@
+					@*<vc:dak-comments dak-id="@Model.Dak.Id"></vc:dak-comments>*@
+				</div>
+	</div>
+
+
+    <div class="col-9 border "> 
+		<iframe id="myFrame" runat="server"src="@coveringLetterUrl" width="100%" height="800" > </iframe>
+	</div>
+
+</div>
+
+
+

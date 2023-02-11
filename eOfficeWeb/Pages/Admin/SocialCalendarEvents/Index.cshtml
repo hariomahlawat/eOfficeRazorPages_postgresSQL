@@ -1,0 +1,80 @@
+﻿@page
+@using eOffice.Utility
+@model eOffice.Pages.Admin.SocialCalendarEvents.IndexModel
+
+
+
+<div class="container p-3	">
+	<div class="row justify-content-center">
+		<div class="col-10">
+
+			@*top header area*@
+			<div class="">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-6">
+							<span class="text-primary display-6" @*style="font-family: 'Brush Script MT', cursive;"*@>Social Calendar Events</span>
+						</div>
+						<div class="col-6 text-end">
+							<a asp-page="create" class="btn btn btn-success">
+								<i class="fa-solid fa-plus"></i> Create New Event
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+			<hr/>
+
+			@*table starts*@
+			<table id="tableSocialCalendar"  class="table table-striped" style="width:100%">
+		<thead>
+			<tr>
+				<th style="display:none">Id</th>
+				<th>Date</th>
+				<th>Event Type</th>
+				<th>Name</th>
+				
+				@if (User.IsInRole(SD.AdminRole)||  User.IsInRole(SD.HeadClerkRole) || User.IsInRole(SD.SuperAdminRole ))
+                {
+					<th ></th>
+				}
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var obj in Model.SocialCalendarEvents)
+			{
+				<tr>
+					<td style="display:none" width="0%" >@obj.Id</td>
+					<td width="15%">@obj.EventDate.ToString("dd/M/yyyy")</td>
+					<td width="15%">@obj.EventType</td>
+					<td width="50%">@obj.Name</td>
+					
+					@if (User.IsInRole(SD.AdminRole)||  User.IsInRole(SD.HeadClerkRole) || User.IsInRole(SD.SuperAdminRole ))
+                    {
+						<td width="5%">
+							<div class="w-50 btn-group" role="group">
+							<a asp-page="Edit" asp-route-id="@obj.Id" class="btn btn-sm btn-primary mx-2">
+								<i class="fa-solid fa-pen-to-square"></i>
+							</a>
+							<a asp-page="Delete" asp-route-id="@obj.Id"  class="btn btn-sm btn-danger mx-2">
+								<i class="fa-solid fa-trash-can"></i>
+							</a>
+							</div>
+						</td>
+					}
+
+				</tr>
+			}
+			
+		</tbody>
+	</table>
+
+		</div>
+	</div>
+</div>
+
+@section Scripts{
+	<script src="~/js/socialCalendar.js"></script>
+}
