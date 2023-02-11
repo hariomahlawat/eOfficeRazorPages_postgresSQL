@@ -34,6 +34,14 @@
                                             <div class="col-md-1 mx-1">
                                                 <center>
                                                     <img class="img-fluid" src="~/images/generaluser.png" style="max-width:55px">
+                                                    @if (obj.IsEnabled == true)
+                                                    {
+                                                        <span class="badge badge-success" style="color:forestgreen">Active User</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-danger" style="color:red">User Disabled</span>
+                                                    }
                                                 </center>
                                             </div>
                                             <div class="col-md-3 mx-1">
@@ -68,6 +76,18 @@
                                                 <a asp-page="/Admin/UserAdministration/ResetPasswordByAdmin" asp-route-userId="@obj.Id" class="btn btn-sm btn-outline-danger my-1">
                                                     Reset Password
                                                 </a>
+                                                @if (obj.IsEnabled == true)
+                                                {
+                                                    <a asp-page="/Admin/UserAdministration/UserActivation" asp-route-id="@obj.Id" class="btn btn-sm btn-outline-danger my-1">
+                                                        Disable User
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-page="/Admin/UserAdministration/UserActivation" asp-route-id="@obj.Id" class="btn btn-sm btn-outline-success my-1">
+                                                        Activate User
+                                                    </a>
+                                                }
                                                 
                                             </div>
                                         </div>

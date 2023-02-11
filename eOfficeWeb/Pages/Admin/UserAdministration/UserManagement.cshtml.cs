@@ -14,8 +14,10 @@ namespace eOfficeWeb.Pages.Admin.UserAdministration
         private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
         private readonly IUnitOfWork _unitOfWork;
 
+        public IEnumerable<ApplicationUser> AllUsers { get; set; }
         public IEnumerable<ApplicationUser> Users { get; set; }
-        
+        public ApplicationUser LoggedInUser { get; set; }
+
 
         public UserManagementModel(Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork)
         {
@@ -26,7 +28,18 @@ namespace eOfficeWeb.Pages.Admin.UserAdministration
 
         public void OnGet()
         {
-            Users = userManager.Users;
+            AllUsers = userManager.Users;
+
+            Users = new List<ApplicationUser>();
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            foreach (var user in AllUsers)
+            {
+                if (user.Email != "hariomahlawat@619")
+                {
+                    users.Add(user);
+                }
+            }
+            Users = users;
         }
 
 
