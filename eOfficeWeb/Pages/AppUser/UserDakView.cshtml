@@ -201,7 +201,7 @@
 				}
 
 				@*badges for dak visibility*@
-				@if (@Model.DakVisibilityTag != null)
+				@*@if (@Model.DakVisibilityTag != null)
 				{
 					<span class="text-black text-capitalize text-break">Marked for</span>
 					@if (@Model.DakVisibilityTag.Cdr == true)
@@ -213,7 +213,7 @@
 						<span class="badge text-sm-center bg-success text-break">2IC</span> <br />
 					}
 					<hr/>
-				}
+				}*@
 
 				@*button for modal of marking dak category*@
 				@if (User.IsInRole(SD.OfficerRole) || User.IsInRole(SD.SuperAdminRole))
@@ -224,12 +224,12 @@
 				}
 
 				@*button for modal of marking dak*@
-				@if ((User.IsInRole(SD.OfficerRole) || User.IsInRole(SD.SuperAdminRole)) && !User.IsInRole(SD.CommandingOfficerRole))
+				@*@if ((User.IsInRole(SD.OfficerRole) || User.IsInRole(SD.SuperAdminRole)) && !User.IsInRole(SD.CommandingOfficerRole))
 				{
 					<button type="button" class="btn btn-outline-danger my-1" data-bs-toggle="modal" data-bs-target="#modalDakViewSelected" style="float:right">
 						<i class=" fs-3 fa-solid fa-square-check " style="color:darkslategrey"> </i> Mark Dak
 					</button>
-				}
+				}*@
 			
 				<!-- Modal for marking dak-->
 				<div class="modal fade" id="modalDakCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -78,21 +78,21 @@ namespace eOfficeWeb.Pages.Admin.IncomingDak
             // Filter Dak as per user role
             // if Cdr/CO or Dy/2IC - provide selected dak
 
-            if (User.IsInRole(SD.CommandingOfficerRole))
-            {
-                DakVisibilityTag= _unitOfWork.DakVisibilityTag.GetAll().Where(u => u.Cdr == true);
-                var markedForCdrIds = DakVisibilityTag.Select(u => u.DakId).ToArray();
+            //if (User.IsInRole(SD.CommandingOfficerRole))
+            //{
+            //    DakVisibilityTag= _unitOfWork.DakVisibilityTag.GetAll().Where(u => u.Cdr == true);
+            //    var markedForCdrIds = DakVisibilityTag.Select(u => u.DakId).ToArray();
 
-                Dak = Dak.Where(u => markedForCdrIds.Contains(u.Id));
+            //    Dak = Dak.Where(u => markedForCdrIds.Contains(u.Id));
 
-            }
-            else if (User.IsInRole(SD.SecondInCommandRole))
-            {
-                DakVisibilityTag = _unitOfWork.DakVisibilityTag.GetAll().Where(u => u.DyCdr == true);
-                var markedForDyCdrIds = DakVisibilityTag.Select(u => u.DakId).ToArray();
+            //}
+            //else if (User.IsInRole(SD.SecondInCommandRole))
+            //{
+            //    DakVisibilityTag = _unitOfWork.DakVisibilityTag.GetAll().Where(u => u.DyCdr == true);
+            //    var markedForDyCdrIds = DakVisibilityTag.Select(u => u.DakId).ToArray();
 
-                Dak = Dak.Where(u => markedForDyCdrIds.Contains(u.Id));
-            }
+            //    Dak = Dak.Where(u => markedForDyCdrIds.Contains(u.Id));
+            //}
 
             //==================================================================================
 
