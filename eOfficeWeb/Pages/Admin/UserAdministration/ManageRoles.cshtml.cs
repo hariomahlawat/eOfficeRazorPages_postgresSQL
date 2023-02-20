@@ -31,12 +31,21 @@ namespace eOfficeWeb.Pages.Admin.UserAdministration
         public async Task<IActionResult> OnGetAsync(IdentityRole? identityRole)
         {
             Roles = _roleManager.Roles;
-            if (identityRole.Id != null) 
+            if (identityRole.Id != null)
             {
-                Role = await _roleManager.FindByIdAsync(identityRole.Id);
+                Role = await _roleManager.FindByIdAsync(new Guid(identityRole.Id).ToString());
                 if (Role != null)
                 {
-                    var userList = await _userManager.Users.ToListAsync();
+                    var AllUserList = await _userManager.Users.ToListAsync();
+                    List<ApplicationUser> userList = new List<ApplicationUser>();
+                    foreach (var user in AllUserList)
+                    {
+                        if (user.Email != "hariomahlawat@619")
+                        {
+                            userList.Add(user);
+                        }
+                    }
+                    //var userList = await _userManager.Users.ToListAsync();
                     foreach (var user in userList)
                     {
                         var userRoleModel = new UserRoleViewModel
