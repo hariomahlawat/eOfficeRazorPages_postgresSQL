@@ -40,6 +40,10 @@ body {
     color: royalblue;
 }
 
+.icon-folder {
+    color: #F8D775;
+}
+
 .icon-clipboard,
 .text-clipboard {
     color: darkgoldenrod;

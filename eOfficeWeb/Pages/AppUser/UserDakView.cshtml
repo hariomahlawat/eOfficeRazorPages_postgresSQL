@@ -219,15 +219,22 @@
 				@if (User.IsInRole(SD.OfficerRole) || User.IsInRole(SD.SuperAdminRole))
 				{
 						<button type="button" class="btn btn-outline-primary my-1" data-bs-toggle="modal" data-bs-target="#modalDakCategory" style="float:right">
-						<i class=" fs-3 fa-solid fa-square-check " style="color:darkslategrey"> </i> Mark Category
+						<i class="fa-solid fa-folder icon-folder"></i> Mark Category
 						</button>
+				}
+				@*button for modal of speak*@
+				@if (User.IsInRole(SD.OfficerRole))
+				{
+					<button type="button" class="btn btn-outline-secondary my-1" data-bs-toggle="modal" data-bs-target="#modalDakSpeak" style="float:right">
+						<i class="fas fa-microphone icon-dak-speak"></i> Mark Dak for Speak
+					</button>
 				}
 
 				@*button for modal of marking dak*@
 				@*@if ((User.IsInRole(SD.OfficerRole) || User.IsInRole(SD.SuperAdminRole)) && !User.IsInRole(SD.CommandingOfficerRole))
 				{
 					<button type="button" class="btn btn-outline-danger my-1" data-bs-toggle="modal" data-bs-target="#modalDakViewSelected" style="float:right">
-						<i class=" fs-3 fa-solid fa-square-check " style="color:darkslategrey"> </i> Mark Dak
+						<i class=" fs-2 fa-solid fa-square-check " style="color:darkslategrey"> </i> Mark Dak
 					</button>
 				}*@
 			
