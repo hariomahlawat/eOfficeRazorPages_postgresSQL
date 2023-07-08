@@ -10,8 +10,10 @@
 }
 
 
-            <div class=" card border-top-0 border-bottom-0 d-flex flex-column align-items-center align-items-sm-start  px-3  text-black min-vh-30">
-              <div class="card py-3 d-flex flex-column ">
+            <div class=" card border-top-0 border-bottom-0 d-flex flex-column align-items-center  px-3  text-black min-vh-30">
+
+    <div class="d-flex justify-content-center">
+            <div class="card py-3 d-flex flex-column center-card">
                 <center class="px-2 d-none d-lg-block fs-6">
                   <img class="img-fluid" src="~/images/generaluser.png" height="75px" width="75px" />
                   <p style="word-wrap: break-word">Welcome @displayName </p>
@@ -24,8 +26,9 @@
                   
                </center>
               </div>
+              </div>
 
-              <div class="">
+    <div class="w-100 text-start">
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-6 py-3" id="menu">
                     <li>
                         <a asp-page="/Admin/IncomingDak/Index" asp-route-id="notSeen" class="nav-link px-0 align-middle text-black">

@@ -82,6 +82,18 @@ body {
     margin-bottom: 65px;
 }
 
+.center-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .center-card img, .center-card p, .center-card a, .center-card form {
+        margin: auto;
+        text-align: center;
+    }
+
+
 #rightBodyColumn {
     margin-left: auto;
 }
