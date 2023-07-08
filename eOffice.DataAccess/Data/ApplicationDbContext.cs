@@ -29,6 +29,7 @@ namespace eOffice.DataAccess.Data
         public DbSet<OfficeBranchSection> OfficeBranchSection { get; set; }
         public DbSet<OrderImage> OrderImages { get; set; }
         public DbSet<DakVisibilityTag> DakVisibilityTag { get; set; }
-    }
+		public DbSet<DakSpeak> DakSpeak { get; set; }
+	}
     
 }
