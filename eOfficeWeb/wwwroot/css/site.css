@@ -243,3 +243,10 @@ body {
 }
 
 
+/*to bo list*/
+.task-controls {
+    float: right;
+}
+.add-btn {
+    width: 100px;
+}
