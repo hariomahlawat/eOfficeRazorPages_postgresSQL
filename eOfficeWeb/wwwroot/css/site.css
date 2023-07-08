@@ -5,12 +5,10 @@ html {
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 14px;
-  }
+    html {
+        font-size: 14px;
+    }
 }
-
-
 
 body {
     margin-bottom: 65px;
@@ -18,77 +16,43 @@ body {
     margin-top: 65px;
 }
 
-/* CSS classes for colored icons */
-
-
-.icon-circle-check {
+/* Common icon color classes */
+.icon-circle-check,
+.text-danger {
     color: crimson;
 }
-
-
 
 .icon-cake-candles {
     color: orangered;
 }
 
-.icon-list-check {
-    color: darkgreen; /* specify your desired color here */
-}
-
-.icon-bullhorn {
-    color: black; /* specify your desired color here */
-}
-
-/* CSS classes for the welcome message and other text attributes */
-.text-black {
+.icon-list-check,
+.icon-bullhorn,
+.icon-chalkboard,
+.fa-icon-innter-text,
+.text-black,
+.btn-text-black {
     color: black;
 }
 
-
-/* CSS classes for colored icons */
-.icon-envelope {
-    color: royalblue;
-}
-
-.icon-clipboard {
-    color: darkgoldenrod;
-}
-
-.icon-book {
-    color: firebrick;
-}
-
-.icon-calendar {
-    color: cadetblue;
-}
-
-/* CSS classes for colored text */
+.icon-envelope,
 .text-envelope {
     color: royalblue;
 }
 
+.icon-clipboard,
 .text-clipboard {
     color: darkgoldenrod;
 }
 
+.icon-book,
 .text-book {
     color: firebrick;
 }
 
+.icon-calendar,
 .text-calendar {
     color: cadetblue;
-}
-
-.theme-golden {
-    color: #ECAA81;
-}
-
-.icon-calendar {
-    color: green;
-}
-
-.icon-chalkboard {
-    color: black;
 }
 
 .icon-address-card {
@@ -98,32 +62,10 @@ body {
 .icon-gear {
     color: red;
 }
-.icon-folder {
+
+.icon-folder,
+.theme-golden {
     color: #F8D775; /* primary color */
-}
-
-
-
-
-/*
- * Sidebar
- */
-#sidebarMenu {
-    margin-top: 65px;
-    margin-bottom: 65px;
-}
-#rightBodyColumn {
-    margin-left:auto;
-}
-
-/*fontawesome icons fonts*/
-.fa-icon-innter-text {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    margin: 0;
-    text-align: left;
 }
 
 .icon-dak-speak {
@@ -134,9 +76,17 @@ body {
     color: green;
 }
 
+/* Sidebar styles */
+#sidebarMenu {
+    margin-top: 65px;
+    margin-bottom: 65px;
+}
 
-/*for dashboard*/
+#rightBodyColumn {
+    margin-left: auto;
+}
 
+/* Dashboard styles */
 .card-shadow-sm {
     border: 0;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
@@ -150,10 +100,6 @@ body {
     border-radius: 0%;
 }
 
-.text-black {
-    color: black;
-}
-
 .fs-5-custom {
     font-size: 1.25rem;
 }
@@ -164,10 +110,6 @@ body {
 
 .fa-solid-color-green {
     color: green;
-}
-
-.btn-text-black {
-    color: black;
 }
 
 .fs-6-custom {
@@ -192,10 +134,6 @@ body {
     color: red;
 }
 
-.fa-solid-thumbtack-color-blue {
-    color: deepskyblue;
-}
-
 .footer-custom {
     z-index: 101;
     background-color: white;
@@ -213,17 +151,19 @@ body {
     color: blue;
 }
 
-/*user management*/
-
+/* User management styles */
 .hidden {
     display: none;
 }
+
 .full-width {
     width: 100%;
 }
+
 .img-size {
     max-width: 55px;
 }
+
 .badge-success {
     color: forestgreen;
 }
@@ -231,22 +171,25 @@ body {
 .badge-danger {
     color: red;
 }
+
 .word-wrap {
     word-wrap: break-word;
 }
+
 .red-bold {
     color: red;
     font-weight: bold;
 }
+
 .red-border {
     border: 1px solid red;
 }
 
-
-/*to bo list*/
+/* To-do list styles */
 .task-controls {
     float: right;
 }
+
 .add-btn {
     width: 100px;
 }
