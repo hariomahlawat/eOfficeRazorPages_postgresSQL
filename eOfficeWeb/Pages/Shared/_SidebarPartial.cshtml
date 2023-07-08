@@ -26,15 +26,28 @@
               </div>
 
               <div class="">
-                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5 py-3" id="menu">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-6 py-3" id="menu">
                     <li>
                         <a asp-page="/Admin/IncomingDak/Index" asp-route-id="notSeen" class="nav-link px-0 align-middle text-black">
-                    <i class="fa-solid fa-envelope-open-text icon-envelope"></i> <span class="ms-1 d-none d-sm-inline"> Incoming Dak</span>
-                </a>
+                              <i class="fa-solid fa-envelope-open-text icon-envelope"></i> <span class="ms-1 d-none d-sm-inline"> Incoming Dak</span>
+                        </a>
                     </li>
+            <li>
+                <a asp-page="/Admin/IncomingDak/Index" asp-route-id="notSeen" class="nav-link px-0 align-middle text-black">
+                    <i class="fas fa-microphone icon-dak-speak"></i> <span class="ms-1 d-none d-sm-inline"> Speak (marked for you)</span>
+                </a>
+            </li>
+<li>
+    <a asp-page="/Admin/IncomingDak/Index" asp-route-id="notSeen" class="nav-link px-0 align-middle text-black">
+                    <i class="fas fa-comments icon-dak-request-speak"></i> <span class="ms-1 d-none d-sm-inline"> Speak (marked by you)</span>
+    </a>
+</li>
+
+         
+
 
                     <li id="accordion" class="fs-5">
-                       <a class="collapsed btn px-0 align-middle text-black fs-5" data-bs-toggle="collapse" href="#collapseMarkedDak">
+                       <a class="collapsed btn px-0 align-middle text-black fs-6" data-bs-toggle="collapse" href="#collapseMarkedDak">
                             <i class="fa-solid fa-folder icon-folder" ></i><span class="ms-1 d-none d-sm-inline"> Dak Categories <i class="fa-solid fa-angles-down"></i></span>
                         </a>    
                         <div id="collapseMarkedDak" class="collapse" data-bs-parent="#accordion">
