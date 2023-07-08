@@ -125,3 +125,82 @@ body {
     margin: 0;
     text-align: left;
 }
+
+
+/*for dashboard*/
+
+.card-shadow-sm {
+    border: 0;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card-bg-lavenderblush {
+    background-color: lavenderblush;
+}
+
+.border-radius-0 {
+    border-radius: 0%;
+}
+
+.text-black {
+    color: black;
+}
+
+.fs-5-custom {
+    font-size: 1.25rem;
+}
+
+.fa-solid-color {
+    color: blue;
+}
+
+.fa-solid-color-green {
+    color: green;
+}
+
+.btn-text-black {
+    color: black;
+}
+
+.fs-6-custom {
+    font-size: 1rem;
+}
+
+.card-header-custom {
+    color: deepskyblue;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.bg-gradient-custom {
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+}
+
+.fa-solid-thumbtack-color {
+    color: deepskyblue;
+}
+
+.fa-solid-thumbtack-color-red {
+    color: red;
+}
+
+.fa-solid-thumbtack-color-blue {
+    color: deepskyblue;
+}
+
+.footer-custom {
+    z-index: 101;
+    background-color: white;
+}
+
+.icon-user-color {
+    color: cadetblue;
+}
+
+.icon-power-off-color {
+    color: red;
+}
+
+.icon-right-to-bracket-color {
+    color: blue;
+}
