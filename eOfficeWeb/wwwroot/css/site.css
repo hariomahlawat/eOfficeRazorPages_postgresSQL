@@ -204,3 +204,26 @@ body {
 .icon-right-to-bracket-color {
     color: blue;
 }
+
+/*user management*/
+
+.hidden {
+    display: none;
+}
+.full-width {
+    width: 100%;
+}
+.img-size {
+    max-width: 55px;
+}
+.badge-success {
+    color: forestgreen;
+}
+
+.badge-danger {
+    color: red;
+}
+.word-wrap {
+    word-wrap: break-word;
+}
+
