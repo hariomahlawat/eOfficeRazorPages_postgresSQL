@@ -203,6 +203,10 @@ body {
     width: 100px;
 }
 
+.color-golden {
+    text-shadow: 2px 2px 4px #cccccc; /* Lighter shadow color */
+    color: #DAA520; /* This is a golden color */
+}
 .theme-golden {
     /*font-family: 'Georgia', serif;*/
     font-family: 'Brush Script MT', cursive;

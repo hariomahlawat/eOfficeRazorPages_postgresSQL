@@ -20,6 +20,7 @@ namespace eOffice.DataAccess.Repository.IRepository
         IOfficeBranchSectionRepository OfficeBranchSection { get; }
         IOrderImageRepository OrderImage { get; }
         IDakVisibilityTagRepository DakVisibilityTag { get; }
-        void Save();
+		IDakSpeakRepository DakSpeak { get; }
+		void Save();
     }
 }

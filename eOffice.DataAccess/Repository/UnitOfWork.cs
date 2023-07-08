@@ -24,7 +24,8 @@ namespace eOffice.DataAccess.Repository
         public IOfficeBranchSectionRepository OfficeBranchSection { get; private set; }
         public IOrderImageRepository OrderImage { get; private set; }
         public IDakVisibilityTagRepository DakVisibilityTag { get; private set; }
-        public UnitOfWork(ApplicationDbContext db)
+        public IDakSpeakRepository DakSpeak { get; private set; }
+		public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             socialCalendar = new SocialCalendarRepository(_db);
@@ -39,6 +40,7 @@ namespace eOffice.DataAccess.Repository
             OfficeBranchSection = new OfficeBranchSectionRepository(_db);
             OrderImage = new OrderImageRepository(_db);
             DakVisibilityTag = new DakVisibilityTagRepository(_db);
+            DakSpeak= new DakSpeakRepository(_db);
         }
 
         
