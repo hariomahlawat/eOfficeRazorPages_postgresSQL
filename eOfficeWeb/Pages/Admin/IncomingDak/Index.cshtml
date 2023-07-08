@@ -23,15 +23,13 @@ else
 				<div class="row">
 
 					@*button for daks - not seen, today dak, last one month, last six month, last one year and show all*@
-					<div class="col-9">
+				<div class="col-9 ">
 						@*not seen button*@
 						@if (!User.IsInRole(SD.AdminRole))
 						{
 						@if (Model.FlagNotSeen == true)
 						{
-							<a asp-page="index" asp-route-id="notSeen" asp-route-pageName="IncomingDak" class="btn btn-sm btn-outline-light text-black fs-6"
-							style="background-color:#ECAA81;"
-							> 
+							<a asp-page="index" asp-route-id="notSeen" asp-route-pageName="IncomingDak" class="btn btn-sm btn-outline-light text-black fs-6">
 								Not Seen <span class="badge bg-light text-black rounded-5">@Model.CountUnseenDak</span>							
 							</a>
 						}
@@ -122,7 +120,7 @@ else
 						}
 						else
 						{
-							<span class="display-6 text-primary" @*style="font-family: 'Brush Script MT', cursive;"*@>Incoming Dak</span>
+						<span class="display-6 text-primary cursive-text-heading">Incoming Dak</span>
 						}
 					</div>
 

@@ -63,10 +63,7 @@ body {
     color: red;
 }
 
-.icon-folder,
-.theme-golden {
-    color: #F8D775; /* primary color */
-}
+
 
 .icon-dak-speak {
     color: blue;
@@ -204,4 +201,17 @@ body {
 
 .add-btn {
     width: 100px;
+}
+
+.theme-golden {
+    /*font-family: 'Georgia', serif;*/
+    font-family: 'Brush Script MT', cursive;
+    text-shadow: 2px 2px 4px #cccccc; /* Lighter shadow color */
+    color: #DAA520; /* This is a golden color */
+}
+.cursive-text-heading {
+    /*font-family: 'Georgia', serif;*/
+    font-family: 'Brush Script MT', cursive;
+    text-shadow: 1px 1px 2px #cccccc; /* Lighter shadow color */
+    color: #DAA520; /* This is a golden color */
 }
