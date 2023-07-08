@@ -18,6 +18,92 @@ body {
     margin-top: 65px;
 }
 
+/* CSS classes for colored icons */
+
+
+.icon-circle-check {
+    color: crimson;
+}
+
+
+
+.icon-cake-candles {
+    color: orangered;
+}
+
+.icon-list-check {
+    color: darkgreen; /* specify your desired color here */
+}
+
+.icon-bullhorn {
+    color: black; /* specify your desired color here */
+}
+
+/* CSS classes for the welcome message and other text attributes */
+.text-black {
+    color: black;
+}
+
+
+/* CSS classes for colored icons */
+.icon-envelope {
+    color: royalblue;
+}
+
+.icon-clipboard {
+    color: darkgoldenrod;
+}
+
+.icon-book {
+    color: firebrick;
+}
+
+.icon-calendar {
+    color: cadetblue;
+}
+
+/* CSS classes for colored text */
+.text-envelope {
+    color: royalblue;
+}
+
+.text-clipboard {
+    color: darkgoldenrod;
+}
+
+.text-book {
+    color: firebrick;
+}
+
+.text-calendar {
+    color: cadetblue;
+}
+
+.theme-golden {
+    color: #ECAA81;
+}
+
+.icon-calendar {
+    color: green;
+}
+
+.icon-chalkboard {
+    color: black;
+}
+
+.icon-address-card {
+    color: dodgerblue;
+}
+
+.icon-gear {
+    color: red;
+}
+.icon-folder {
+    color: #F8D775; /* primary color */
+}
+
+
+
 
 /*
  * Sidebar

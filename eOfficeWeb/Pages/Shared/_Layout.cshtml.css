@@ -11,6 +11,26 @@ a {
   color: #0077cc;
 }
 
+.theme-golden {
+    color: #ECAA81;
+}
+.icon-calendar {
+    color: green;
+}
+
+.icon-chalkboard {
+    color: black;
+}
+
+.icon-address-card {
+    color: dodgerblue;
+}
+
+.icon-gear {
+    color: red;
+}
+
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

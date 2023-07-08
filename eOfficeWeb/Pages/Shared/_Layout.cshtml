@@ -5,10 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - eOfficeWeb</title>
+    
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
     <link rel="stylesheet" href="~/datatables/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="~/bootstrap-icons-1.9.1/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/bootstrap-icons-1.9.1/bootstrap-icons.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/toastr/toastr.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/eOfficeWeb.styles.css" asp-append-version="true" />
@@ -18,7 +19,11 @@
     <header>
         <nav class="navbar fixed-top  navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fs-5">
             <div class="container-fluid">
-                <a class="navbar-brand fs-3" asp-area="" asp-page="/Index" style="color:#ECAA81;">eOffice
+                <a class="navbar-brand fs-3" asp-area="" asp-page="/Index" >
+                    <span class="theme-golden">
+                        eOffice
+                    </span>
+                    
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -26,23 +31,23 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Noticeboard"><i class="fa-solid fa-chalkboard"></i> Noticeboard</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/AppUser/AppEventCalendar/Index"><i class="fa-solid fa-calendar-days" style="color:green"></i> Event Calendar</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/AppUser/AppEventCalendar/Index"><i class="fa-solid fa-calendar-days icon-calendar "></i> Event Calendar</a>
                         </li>
                         @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/AppUser/TechLibraryModule/Index"><i class="fa-solid fa-book-open" style="color:firebrick"></i> Tech Library</a>
                         </li>*@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/AppUser/Dashboard"><i class="fa-solid fa-address-card" style="color:dodgerblue"></i> Dashboard</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/AppUser/Dashboard"><i class="fa-solid fa-address-card icon-address-card"></i> Dashboard</a>
                         </li>
                        
                         @if (User.IsInRole(SD.AdminRole) || User.IsInRole(SD.SuperAdminRole ))
                         {
                          <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-black" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-gear" style="color:red"></i> Admin</a>
+                                <a class="nav-link dropdown-toggle text-black " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-gear icon-gear"></i> Admin</a>
                             <div class="dropdown-menu">
                                 <a class="nav-link text-dark" asp-area="" asp-route-id="notSeen"  asp-page="/Admin/IncomingDak/Index">Manage Dak</a>
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin/SocialCalendarEvents/Index">Social Calendar</a>

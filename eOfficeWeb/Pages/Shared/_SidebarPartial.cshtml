@@ -29,12 +29,13 @@
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start fs-5 py-3" id="menu">
                     <li>
                         <a asp-page="/Admin/IncomingDak/Index" asp-route-id="notSeen" class="nav-link px-0 align-middle text-black">
-                            <i class="fa-solid fa-envelope-open-text" style="color:blue"></i> <span class="ms-1 d-none d-sm-inline"> Incoming Dak</span></a>
+                    <i class="fa-solid fa-envelope-open-text icon-envelope"></i> <span class="ms-1 d-none d-sm-inline"> Incoming Dak</span>
+                </a>
                     </li>
 
                     <li id="accordion" class="fs-5">
                        <a class="collapsed btn px-0 align-middle text-black fs-5" data-bs-toggle="collapse" href="#collapseMarkedDak">
-                            <i class="fa-solid fa-circle-check" style="color:crimson"></i><span class="ms-1 d-none d-sm-inline"> Marked Dak <i class="fa-solid fa-angles-down"></i>
+                            <i class="fa-solid fa-folder icon-folder" ></i><span class="ms-1 d-none d-sm-inline"> Dak Categories <i class="fa-solid fa-angles-down"></i></span>
                         </a>    
                         <div id="collapseMarkedDak" class="collapse" data-bs-parent="#accordion">
                                 <a class="btn fs-6 text-black" asp-route-markedType="OTS"  asp-page="/AppUser/MarkedDakListView">Officers To See</a> <br/>
@@ -45,16 +46,17 @@
 
                     <li>
                         <a asp-area="" asp-page="/AppUser/AppEventCalendar/Index"  class="nav-link px-0 align-middle text-black">
-                            <i class="fa-solid fa-calendar-days" style="color:green"></i> <span class="ms-1 d-none d-sm-inline">Event Calendar</span></a>
+                    <i class="fa-solid fa-calendar-days icon-calendar" ></i> <span class="ms-1 d-none d-sm-inline">Event Calendar</span></a>
                     </li>
                     
                     <li>
                         <a asp-area="" asp-page="/Admin/SocialCalendarEvents/Index" class="nav-link px-0 align-middle text-black">
-                            <i class="fa-solid fa-cake-candles" style="color:orangered"></i> <span class="ms-1 d-none d-sm-inline">Social Calendar</span> </a>
+                    <i class="fa-solid fa-cake-candles icon-cake-candles" ></i> <span class="ms-1 d-none d-sm-inline">Social Calendar</span> </a>
                     </li>
                     <li>
                         <a asp-area="" asp-page="/AppUser/UserToDoList/Index" class="nav-link px-0 align-middle text-black">
-                            <i class="fa-solid fa-list-check"></i> <span class="ms-1 d-none d-sm-inline">To Do List</span> </a>
+                    <i class="fa-solid fa-list-check icon-list-check"></i> <span class="ms-1 d-none d-sm-inline">To Do List</span>
+                </a>
                     </li>
                     
             @if (User.IsInRole(SD.SuperAdminRole))

@@ -1,8 +1,10 @@
 ﻿@page
 @model IndexModel
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Home page";
 }
+
 
 
 @*eme logo*@
@@ -14,7 +16,7 @@
     <div class="col-md-4"></div>
 </div>
 <div class="text-center">
-    <span class="display-4">Welcome to <span class="" style="color:#ECAA81">eOffice</span></span>
+    <span class="display-4 ">Welcome to <span class="theme-golden">eOffice</span></span>
     <p class="fs-6 fst-italic">A product of 619 EME Bn</p>
 </div>
 
@@ -27,7 +29,7 @@
         <div class="card border-0">
             <div class="card-body">
                 <span >
-                    <i class=" fs-1 fa-solid fa-envelope-open-text" style="color:royalblue"></i> <span class="fs-4" style="color:royalblue"> Dak Automation</span>
+                        <i class=" fs-1 fa-solid fa-envelope-open-text icon-envelope"></i> <span class="fs-4 icon-envelope"> Dak Automation</span>
                 </span>
                 <p class="fs-5">
                     Automation of dak circulation in office. View and comment on the dak. Search old letters. Attach a draft reply to a dak.
@@ -40,7 +42,7 @@
         <div class="card border-0">
             <div class="card-body">
                 <span >
-                    <i class="fs-1 fa-solid fa-clipboard-list" style="color:darkgoldenrod" ></i> <span class="fs-4" style="color:darkgoldenrod"> To Do List</span>
+                        <i class="fs-1 fa-solid fa-clipboard-list icon-clipboard"></i> <span class="fs-4 icon-clipboard"> To Do List</span>
                 </span>
                 <p class="fs-5">
                     Do you often feel completely overwhelmed with the amount of work you’ve got to do? Have your personalised ToDo list which can help you increase productivity.
@@ -53,7 +55,7 @@
         <div class="card border-0">
             <div class="card-body">
                 <span >
-                    <i class="fs-1 fa-solid fa-book-open" style="color:firebrick"></i> <span class="fs-4" style="color:firebrick"> Tech Library</span>
+                    <i class="fs-1 fa-solid fa-book-open icon-book" ></i> <span class="fs-4 icon-book" > Tech Library</span>
                 </span>
                 <p class="fs-5">
                     Tech Library - under development. Access your all tech documents, EMERs, policies and books at one place. 
@@ -61,25 +63,12 @@
             </div>
         </div>
     </div>
-    @*info card*@
-    @*<div class="col">
-        <div class="card border-0">
-            <div class="card-body">
-                <span >
-                    <i class=" fs-1 fa-solid fa-envelope-open-text"></i>
-                </span>
-                <p class="fs-5">
-                    Automation of dak circulation in office. View and comment on the dak. Search old letters. Attach a draft reply to a dak.
-                </p>
-            </div>
-        </div>
-    </div>*@
     @*info card - event calendar*@
     <div class="col">
         <div class="card border-0">
             <div class="card-body">
                 <span >
-                    <i class="fs-1 fa-solid fa-calendar-days" style="color:cadetblue"></i> <span class="fs-4" style="color:cadetblue"> Event Calendar</span>
+                        <i class="fs-1 fa-solid fa-calendar-days icon-calendar"></i> <span class="fs-4 icon-calendar"> Event Calendar</span>
                 </span>
                 <p class="fs-5">
                     Organise your events with the help of Event Calendar.
