@@ -226,4 +226,12 @@ body {
 .word-wrap {
     word-wrap: break-word;
 }
+.red-bold {
+    color: red;
+    font-weight: bold;
+}
+.red-border {
+    border: 1px solid red;
+}
+
 

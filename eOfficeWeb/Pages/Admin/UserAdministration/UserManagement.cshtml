@@ -30,7 +30,7 @@
                             <tr>
                                 <td class="hidden">@obj.Id</td>
                                 <td>
-                                    <div class="card-body border bg-light">
+                                    <div class="card-body border bg-light ">
                                         <div class="row">
                                             <div class="col-md-1 mx-1">
                                                 <center>
@@ -53,11 +53,23 @@
                                                 </span>
                                             </div>
 
-                                            <div class="col-md-2 mx-1 word-wrap">
+                                            <div class="col-md-2 mx-1" style="word-wrap: break-word">
                                                 <span class="fs-6">
                                                     <strong>Claims Assigned</strong> <br />
-                                                    Office Branch : @obj.OfficeBranch <br />
-                                                    Office Section : @obj.OfficeBranchSection <br />
+                                                    Office Branch :
+                                                    <span class="@(obj.OfficeBranch == "None" ? "red-bold" : "")">@obj.OfficeBranch </span>
+                                                    @if (obj.OfficeBranch == "None")
+                                                    {
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                    }
+                                                    <br />
+                                                    Office Section :
+                                                    <span class="@(obj.OfficeBranch != "All" && obj.OfficeBranchSection == "None" ? "red-bold" : "")">@obj.OfficeBranchSection </span>
+                                                    @if (obj.OfficeBranch != "All" && obj.OfficeBranchSection == "None")
+                                                    {
+                                                        <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+                                                    }
+                                                    <br />
                                                 </span>
                                             </div>
                                             <div class="col-md-5 mx-1 word-wrap">
@@ -103,7 +115,7 @@
 
     </div>
 
-
+</div>
 
     @section Scripts{
         <script src="~/js/dak.js"></script>
