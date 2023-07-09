@@ -29,6 +29,7 @@ namespace eOfficeWeb.Pages.AppUser
         public IEnumerable<DakComments> DakComments { get; set; }
         public IEnumerable<ToDoList> ToDoList { get; set; }
         public IEnumerable<DakVisibilityTag> DakVisibilityTag { get; set; }
+        public IEnumerable<DakSpeak> DakSpeaks { get; set; }
 
         public int CountDakToday { get; set; }
         public int CountUnseenDak { get; set; }
@@ -151,6 +152,9 @@ namespace eOfficeWeb.Pages.AppUser
             //get events
             Events = _unitOfWork.EventCalendar.GetAll().Where(u => u.Start.Day >= DateTime.Today.Day && u.Start.Day < DateTime.Today.Day + 7);
             CountUpcomingEvents = Events.Count();
+
+            //get speak cases
+            DakSpeaks = _unitOfWork.DakSpeak.GetAll().Where(u => u.MarkedForId==userId);
 
         }
     }
