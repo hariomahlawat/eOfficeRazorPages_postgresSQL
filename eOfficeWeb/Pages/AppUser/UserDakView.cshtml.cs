@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
-
-
+using System.Web.WebPages;
 
 namespace eOfficeWeb.Pages.AppUser
 {
@@ -20,15 +19,20 @@ namespace eOfficeWeb.Pages.AppUser
         private UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         public ApplicationUser ApplicationUser { get; set; }
-        
-        public Dak Dak { get; set; }
+
+		public IEnumerable<ApplicationUser> Users { get; set; }
+
+		public Dak Dak { get; set; }
 
         public DakComments DakComments { get; set; }
         public IEnumerable<DakComments> Comments { get; set; }
         public DraftLetter DraftLetter { get; set; }
         public IEnumerable<DraftLetter> DraftLetters { get; set; }
         public MarkedDak MarkedDak { get; set; }
-        public DakVisibilityTag DakVisibilityTag { get; set; }
+		public DakSpeak DakSpeak { get; set; }
+		public IEnumerable<DakSpeak> SpeakDaks { get; set; }
+
+		public DakVisibilityTag DakVisibilityTag { get; set; }
         public string localserver { get; set; }
 
         public UserDakViewModel(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, UserManager<ApplicationUser> userManager, IConfiguration configuration)
@@ -39,20 +43,36 @@ namespace eOfficeWeb.Pages.AppUser
             _configuration = configuration;
         }
 
-        public void OnGet(int? id)
+        public async Task OnGet(int? id)
         {
             localserver = _configuration["ConnectionStrings:HostAddress"];
-            Dak = _unitOfWork.Dak.GetFirstOrDefault(u => u.Id == id);
+
+			Dak = _unitOfWork.Dak.GetFirstOrDefault(u => u.Id == id);
             Comments = _unitOfWork.DakComments.GetAll(u => u.DakId == id);
             DraftLetters = _unitOfWork.DraftLetter.GetAll(u => u.DakId == id);
+			SpeakDaks = _unitOfWork.DakSpeak.GetAll(u => u.DakId == id);
 
-            
-            MarkedDak = _unitOfWork.MarkedDak.GetFirstOrDefault(u => u.DakId == id);
+			var loggedInUserId = _userManager.GetUserId(User);
+			var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
+			var superAdminUsers = await _userManager.GetUsersInRoleAsync("SuperAdmin");
+			var excludedUsers = adminUsers.Concat(superAdminUsers).ToList();
+
+			// Exclude the logged in user, admin and superadmin
+			Users = _userManager.Users.Where(u => !excludedUsers.Contains(u) && u.Id != loggedInUserId).ToList();
+
+
+
+
+
+			MarkedDak = _unitOfWork.MarkedDak.GetFirstOrDefault(u => u.DakId == id);
             DakVisibilityTag = _unitOfWork.DakVisibilityTag.GetFirstOrDefault(u => u.DakId == id);
-           
-        }
+			DakSpeak = _unitOfWork.DakSpeak.GetFirstOrDefault(u => u.DakId == id);
+			SpeakDaks = _unitOfWork.DakSpeak.GetAll(u => u.DakId == id && u.MarkedById == loggedInUserId).ToList();
 
-        public async Task<IActionResult> OnPost(DakComments dakComments)
+
+		}
+
+		public async Task<IActionResult> OnPost(DakComments dakComments)
         {
             if (ModelState.IsValid)
             {
@@ -176,5 +196,75 @@ namespace eOfficeWeb.Pages.AppUser
         }
 
 
-    }
+		public IActionResult OnPostUpsertSpeakDak(List<string> markedForIds, string remarks, string dakId)
+		{
+			// Convert dakIdString to an integer
+			if (!int.TryParse(dakId, out int dakIdInt))
+			{
+				TempData["error"] = "Invalid Dak ID.";
+				return RedirectToPage("/AppUser/UserDakView", new { id = dakId });
+			}
+
+			var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (loggedInUserId == null)
+			{
+				TempData["error"] = "User not logged in.";
+				return RedirectToPage("/AppUser/UserDakView", new { id = dakId });
+			}
+
+			// If no users were selected, make markedForIds an empty list instead of null
+			if (markedForIds == null)
+			{
+				markedForIds = new List<string>();
+			}
+
+			// Fetch existing records for the current user
+			var existingRecords = _unitOfWork.DakSpeak.GetAll(u => u.MarkedById == loggedInUserId && u.DakId == dakIdInt).ToList();
+
+			// Remove records for users that were unmarked
+			foreach (var record in existingRecords)
+			{
+				if (!markedForIds.Contains(record.MarkedForId))
+				{
+					_unitOfWork.DakSpeak.Remove(record);
+				}
+			}
+
+			// Add or update records for selected users
+			foreach (var userId in markedForIds)
+			{
+				var objFromDb = existingRecords.FirstOrDefault(u => u.MarkedForId == userId);
+
+				if (objFromDb == null) //create
+				{
+					var newMarkedDak = new DakSpeak
+					{
+						MarkedById = loggedInUserId,
+						MarkedForId = userId,
+						DakId = dakIdInt,
+						// Set other necessary properties of MarkedDak
+					};
+					if (!string.IsNullOrEmpty(remarks)) newMarkedDak.Remarks = remarks;
+					_unitOfWork.DakSpeak.Add(newMarkedDak);
+				}
+				else //update 
+				{
+					objFromDb.MarkedById = loggedInUserId;
+					if (!string.IsNullOrEmpty(remarks)) objFromDb.Remarks = remarks;
+					// Update other necessary properties of objFromDb
+					_unitOfWork.DakSpeak.Update(objFromDb);
+				}
+			}
+			_unitOfWork.Save();
+			TempData["success"] = "Dak marked for speak successfully";
+			return RedirectToPage("/AppUser/UserDakView", new { id = dakId });
+		}
+
+
+
+
+
+
+
+	}
 }

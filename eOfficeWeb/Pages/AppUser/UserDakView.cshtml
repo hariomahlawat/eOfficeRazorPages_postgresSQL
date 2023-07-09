@@ -200,6 +200,19 @@
 					<hr/>
 				}
 
+				@*badges for marked dak for speak*@
+				@if (@Model.SpeakDaks != null && Model.SpeakDaks.Count()!=0)
+				{
+					<span>Speak requested by you -</span>
+					foreach (var speakDak in Model.SpeakDaks)
+					{
+						<span class="text-black text-capitalize text-break"> @speakDak.MarkedFor.Rank @speakDak.MarkedFor.FirstName @speakDak.MarkedFor.LastName,  </span>
+
+					}
+					<hr />
+				}
+
+
 				@*badges for dak visibility*@
 				@*@if (@Model.DakVisibilityTag != null)
 				{
@@ -322,6 +335,53 @@
 					</div>
 				</div>
 				<!-- Modal for dak visibility ends -->
+
+
+				<!-- Modal for marking dak for speak-->
+				<div class="modal fade" id="modalDakSpeak" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Mark Users for Speak</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+
+							<form method="post">
+								<div class="modal-body">
+									@*Hidden input for dak id, if required*@
+									<input hidden asp-for="DakSpeak.Id" />
+									<input hidden name="dakId" value="@Model.Dak.Id" />
+
+									@*Checkboxes for each user*@
+									@foreach (var user in Model.Users)  // replace this with your list of users
+									{
+										<div class="mb-3">
+											<input class="form-check-input" type="checkbox" value="@user.Id" name="markedForIds" id="@user.Id"
+											   @(Model.SpeakDaks.Any(d => d.MarkedForId == user.Id) ? "checked" : "")>
+											<label class="form-check-label" for="@user.Id">
+												@user.Rank @user.FirstName @user.LastName (@user.Email)
+											</label>
+										</div>
+									}
+
+
+									@*Input for remarks*@
+									<div class="mb-3">
+										<label for="remarks" class="form-label">Remarks</label>
+										<input type="text" class="form-control" id="remarks" name="remarks">
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									<button asp-page-handler="UpsertSpeakDak" type="submit" class="btn btn-primary">Mark for Speak</button>
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</div>
+				<!-- Modal for marking dak for speak ends -->
+
 
 
 
