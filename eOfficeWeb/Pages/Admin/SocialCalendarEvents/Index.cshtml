@@ -4,9 +4,16 @@
 
 
 
-<div class="container p-3	">
-	<div class="row justify-content-center">
-		<div class="col-10">
+<div class="container-fluid">
+	<div class="row flex-nowrap">
+	@*sidebar column starts*@
+	<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+		<partial name="_SidebarPartial" />
+	</div>
+	@*sidebar column ends*@
+
+		<div class="row justify-content-center col-auto col-md-9 col-xl-10">
+			<div class="">
 
 			@*top header area*@
 			<div class="">
@@ -28,10 +35,10 @@
 			<hr/>
 
 			@*table starts*@
-			<table id="tableSocialCalendar"  class="table table-striped" style="width:100%">
+			<table id="tableSocialCalendar"  class="table table-striped" style="width:50%">
 		<thead>
 			<tr>
-				<th style="display:none">Id</th>
+				<th class="hidden">Id</th>
 				<th>Date</th>
 				<th>Event Type</th>
 				<th>Name</th>
@@ -46,7 +53,7 @@
 			@foreach(var obj in Model.SocialCalendarEvents)
 			{
 				<tr>
-					<td style="display:none" width="0%" >@obj.Id</td>
+					<td class="hidden" >@obj.Id</td>
 					<td width="15%">@obj.EventDate.ToString("dd/M/yyyy")</td>
 					<td width="15%">@obj.EventType</td>
 					<td width="50%">@obj.Name</td>
@@ -73,6 +80,7 @@
 
 		</div>
 	</div>
+</div>
 </div>
 
 @section Scripts{

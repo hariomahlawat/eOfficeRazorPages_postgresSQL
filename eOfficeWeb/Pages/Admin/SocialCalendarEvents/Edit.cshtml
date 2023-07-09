@@ -2,9 +2,16 @@
 @model eOfficeWeb.Pages.Admin.SocialCalendarEvents.EditModel
 @{
 }
-<div class="container">
-	<div class="row justify-content-center">
-		<div class="col-8">
+<div class="container-fluid">
+	<div class="row flex-nowrap">
+		@*sidebar column starts*@
+		<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+			<partial name="_SidebarPartial" />
+		</div>
+		@*sidebar column ends*@
+
+		<div class="row justify-content-center col-auto col-md-9 col-xl-10">
+			<div class="">
 <form method="post">
 	<input hidden asp-for="SocialCalendarEvents.Id" />
 	<div class="p-3 mt-4">
@@ -35,6 +42,7 @@
 	</div>
 	
 </form>
+</div>
 </div>
 </div>
 </div>
