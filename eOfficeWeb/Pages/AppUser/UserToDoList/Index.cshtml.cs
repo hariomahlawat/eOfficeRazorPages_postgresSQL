@@ -30,7 +30,7 @@ namespace eOfficeWeb.Pages.AppUser.UserToDoList
         }
 
         // POST - add a new task in todo list
-        public async Task<IActionResult> OnPost(ToDoList toDoList)
+        public IActionResult OnPost(ToDoList toDoList)
         {
             if (toDoList.Task!=null)
             {

@@ -243,6 +243,44 @@
 					</button>
 				}
 
+				<!-- Button -->
+				<button type="button" class="btn btn-outline-success my-1" data-bs-toggle="modal" data-bs-target="#modalAddToDOTask" style="float:right">
+					<i class="fas fa-plus"></i> Add Task
+				</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="modalAddToDOTask" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Add Task</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<form method="post" asp-page-handler="AddTask">
+									<input hidden name="dakId" value="@Model.Dak.Id" />
+									<div class="mb-3">
+										<label asp-for="ToDoList.Task" class="form-label"></label>
+										<textarea asp-for="ToDoList.Task" class="form-control">@Model.Dak.Subject \n </textarea>
+
+										<span asp-validation-for="ToDoList.Task" class="text-danger"></span>
+									</div>
+									<div class="mb-3">
+										<label asp-for="ToDoList.CompletionTime" class="form-label"></label>
+										<input asp-for="ToDoList.CompletionTime" type="datetime-local" class="form-control" />
+									</div>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+									<button type="submit" class="btn btn-success">Add</button>
+									<input hidden asp-for="ToDoList.ApplicationUserId" value="@userId" />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
 				@*button for modal of marking dak*@
 				@*@if ((User.IsInRole(SD.OfficerRole) || User.IsInRole(SD.SuperAdminRole)) && !User.IsInRole(SD.CommandingOfficerRole))
 				{

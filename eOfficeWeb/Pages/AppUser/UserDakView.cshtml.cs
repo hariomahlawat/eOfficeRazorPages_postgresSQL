@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 using System.Web.WebPages;
+using Microsoft.CodeAnalysis.Completion;
 
 namespace eOfficeWeb.Pages.AppUser
 {
@@ -19,6 +20,7 @@ namespace eOfficeWeb.Pages.AppUser
         private UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         public ApplicationUser ApplicationUser { get; set; }
+		public string UserId { get; set; }
 
 		public IEnumerable<ApplicationUser> Users { get; set; }
 
@@ -31,6 +33,7 @@ namespace eOfficeWeb.Pages.AppUser
         public MarkedDak MarkedDak { get; set; }
 		public DakSpeak DakSpeak { get; set; }
 		public IEnumerable<DakSpeak> SpeakDaks { get; set; }
+		public ToDoList ToDoList { get; set; }
 
 		public DakVisibilityTag DakVisibilityTag { get; set; }
         public string localserver { get; set; }
@@ -53,6 +56,7 @@ namespace eOfficeWeb.Pages.AppUser
 			SpeakDaks = _unitOfWork.DakSpeak.GetAll(u => u.DakId == id);
 
 			var loggedInUserId = _userManager.GetUserId(User);
+			UserId = loggedInUserId;
 			var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
 			var superAdminUsers = await _userManager.GetUsersInRoleAsync("SuperAdmin");
 			var excludedUsers = adminUsers.Concat(superAdminUsers).ToList();
@@ -68,6 +72,12 @@ namespace eOfficeWeb.Pages.AppUser
             DakVisibilityTag = _unitOfWork.DakVisibilityTag.GetFirstOrDefault(u => u.DakId == id);
 			DakSpeak = _unitOfWork.DakSpeak.GetFirstOrDefault(u => u.DakId == id);
 			SpeakDaks = _unitOfWork.DakSpeak.GetAll(u => u.DakId == id && u.MarkedById == loggedInUserId).ToList();
+
+            ToDoList = new ToDoList
+            {
+                Task = Dak.Subject + " from " + Dak.From + "\n",
+				CompletionTime = DateTime.Now,
+			};
 
 
 		}
@@ -261,6 +271,26 @@ namespace eOfficeWeb.Pages.AppUser
 		}
 
 
+		// POST - add a new task in todo list=======================================================================
+		public IActionResult OnPostAddTask(ToDoList toDoList, string dakId)
+		{
+			if (toDoList.Task != null)
+			{
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+				_unitOfWork.ToDoList.Add(toDoList);
+				_unitOfWork.Save();
+				TempData["success"] = "Task added successfully";
+
+			}
+			else
+			{
+				TempData["error"] = "You just tried to create a task without a task. This time, lets's try again by providing a task.";
+			}
+			//return RedirectToPage("/AppUser/UserToDoList/Index");
+			return RedirectToPage("/AppUser/UserDakView", new { id = dakId });
+
+		}
 
 
 
