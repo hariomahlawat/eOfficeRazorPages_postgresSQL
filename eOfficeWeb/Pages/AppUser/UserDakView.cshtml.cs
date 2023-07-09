@@ -223,10 +223,7 @@ namespace eOfficeWeb.Pages.AppUser
 			}
 
 			// If no users were selected, make markedForIds an empty list instead of null
-			if (markedForIds == null)
-			{
-				markedForIds = new List<string>();
-			}
+			markedForIds ??= new List<string>();
 
 			// Fetch existing records for the current user
 			var existingRecords = _unitOfWork.DakSpeak.GetAll(u => u.MarkedById == loggedInUserId && u.DakId == dakIdInt).ToList();

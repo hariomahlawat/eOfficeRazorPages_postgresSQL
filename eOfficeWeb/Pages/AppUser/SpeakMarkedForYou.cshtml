@@ -1,0 +1,65 @@
+﻿@page
+@model eOfficeWeb.Pages.AppUser.SpeakMarkedForYouModel
+@{
+}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+            <partial name="_SidebarPartial" />
+        </div>
+
+        <div class="col-auto col-md-9">
+            @if (Model.SpeakDaks != null && Model.SpeakDaks.Any())
+            {
+                <!-- Iterate over all SpeakDaks grouped by the user who marked them -->
+                @foreach (var group in Model.SpeakDaks.GroupBy(s => s.MarkedById))
+                {
+                    var firstSpeakDak = group.First();
+                    var markedBy = firstSpeakDak.MarkedBy;
+                    if (markedBy == null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i> MarkedBy is null
+                        </div>
+                        continue; // Skip to the next iteration if MarkedBy is null
+                    }
+
+                    <div class="card border-primary my-3">
+                        <div class="card-header bg-primary text-white">
+                            <!-- Show the name of the user who marked these Daks -->
+                            <h5><i class="fas fa-user"></i> Speak requested by @markedBy.Rank @markedBy.FirstName @markedBy.LastName</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- Iterate over all SpeakDaks marked by this user -->
+                                @foreach (var speakDak in group)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="card border-primary my-2">
+                                            <div class="card-body">
+                                                <h5 class="card-title">@speakDak.Dak.Subject</h5>
+                                                <p class="card-text">
+                                                    From: @speakDak.Dak.From <br>
+                                                    Speak Date: @speakDak.MarkedOn.ToShortDateString() <br>
+                                                    Remarks : @speakDak.Remarks
+                                                </p>
+                                                <a href="@Url.Page("/AppUser/UserDakView", new { id = speakDak.DakId })" class="btn btn-primary">View Dak</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle"></i> No speak cases marked for you as on date.
+                </div>
+            }
+        </div>
+    </div>
+</div>

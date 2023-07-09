@@ -19,7 +19,8 @@ namespace eOffice.DataAccess.Repository
 
         public void Update(DakSpeak obj)
         {
-            //to be done later
+            var objFromDb = _db.DakSpeak.FirstOrDefault(u => u.Id == obj.Id);
+            objFromDb.Remarks = obj.Remarks;
         }
     }
 }
