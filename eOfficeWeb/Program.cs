@@ -121,10 +121,6 @@ app.Use((context, next) =>
     }
 
 
-    /*context.Response.Headers.Add("Content-Security-Policy",
-        "default-src 'none'; font-src 'self'; script-src 'self'; style-src 'self' ;form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self' data:; "
-        );*/
-
 
     context.Response.Headers.Add("Content-Security-Policy",
         "default-src 'none'; connect-src 'self'; font-src 'self'; script-src 'self'; style-src 'self' ;form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self' data:; "

@@ -4,8 +4,15 @@
 @{
 }
 
+<div class="container-fluid">
+	<div class="row flex-nowrap">
+		@*sidebar column starts*@
+		<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+			<partial name="_SidebarPartial" />
+		</div>
+		@*sidebar column ends*@
 
-<div class="container">
+		<div class="row justify-content-center col-auto col-md-9 col-xl-10">
 	<form method="post">
 				<div class="row">
 
@@ -119,6 +126,8 @@
 		</tbody>
 	</table>
 	</form>
+</div>
+</div>
 </div>
 
 @section Scripts{
