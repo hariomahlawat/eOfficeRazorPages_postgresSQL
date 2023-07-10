@@ -214,6 +214,9 @@ body {
         transform: rotate(-5deg);
         z-index: -1;
     }
+.notification-icon-size {
+    font-size: 2rem;
+}
 
 
 /* User management styles */
