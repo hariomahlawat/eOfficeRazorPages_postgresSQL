@@ -36,5 +36,40 @@ namespace eOfficeWeb.Pages.AppUser
                                  includeProperties: "MarkedFor,MarkedBy,Dak");
         }
 
+
+
+        public IActionResult OnPostDeleteSpeakDak(string speakDakId)
+        {
+            // Convert dakIdString to an integer
+            if (!int.TryParse(speakDakId, out int speakDakIdInt))
+            {
+                TempData["error"] = "Invalid Dak ID.";
+                return RedirectToPage("/AppUser/SpeakMarkedByYou");
+            }
+
+            var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (loggedInUserId == null)
+            {
+                TempData["error"] = "User not logged in.";
+                return RedirectToPage("/AppUser/SpeakMarkedByYou");
+            }
+
+            // Fetch existing records for the current user
+            var existingRecords = _unitOfWork.DakSpeak.GetAll(u => u.MarkedById == loggedInUserId && u.Id == speakDakIdInt).ToList();
+
+            // Remove records for users that were unmarked
+            foreach (var record in existingRecords)
+            {
+                    _unitOfWork.DakSpeak.Remove(record);
+
+            }
+
+            _unitOfWork.Save();
+            TempData["success"] = "Dak marked as spoken.";
+            return RedirectToPage("/AppUser/SpeakMarkedByYou");
+        }
+
+
+
     }
 }

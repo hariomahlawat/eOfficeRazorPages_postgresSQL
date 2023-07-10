@@ -44,7 +44,19 @@
                                                     Speak Date: @speakDak.MarkedOn.ToShortDateString() <br>
                                                     Remarks : @speakDak.Remarks
                                                 </p>
-                                                <a href="@Url.Page("/AppUser/UserDakView", new { id = speakDak.DakId })" class="btn btn-info">View Dak</a>
+
+                                                <form method="post" asp-page-handler="DeleteSpeakDak" class="d-inline">
+                                                    <input hidden name="speakDakId" value="@speakDak.Id" />
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="completedCheck-@speakDak.DakId">
+                                                        <label class="form-check-label" for="completedCheck-@speakDak.DakId">
+                                                            Mark as completed
+                                                        </label>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary mt-2"><i class="fas fa-check"></i> Submit</button>
+                                                </form>
+
+                                                <a href="@Url.Page("/AppUser/UserDakView", new { id = speakDak.DakId })" class="btn btn-info mt-2 ml-2">View Dak</a>
                                             </div>
                                         </div>
                                     </div>
