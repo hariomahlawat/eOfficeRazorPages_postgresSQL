@@ -10,56 +10,68 @@
         </div>
 
         <div class="col-auto col-md-9">
-            @if (Model.SpeakDaks != null && Model.SpeakDaks.Any())
-            {
-                <!-- Iterate over all SpeakDaks grouped by the user who marked them -->
-                @foreach (var group in Model.SpeakDaks.GroupBy(s => s.MarkedById))
-                {
-                    var firstSpeakDak = group.First();
-                    var markedBy = firstSpeakDak.MarkedBy;
-                    if (markedBy == null)
-                    {
-                        <div class="alert alert-danger" role="alert">
-                            <i class="fas fa-exclamation-triangle"></i> MarkedBy is null
-                        </div>
-                        continue; // Skip to the next iteration if MarkedBy is null
-                    }
 
-                    <div class="card border-primary my-3">
-                        <div class="card-header bg-primary text-white">
-                            <!-- Show the name of the user who marked these Daks -->
-                            <h5><i class="fas fa-user"></i> Speak requested by @markedBy.Rank @markedBy.FirstName @markedBy.LastName</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <!-- Iterate over all SpeakDaks marked by this user -->
-                                @foreach (var speakDak in group)
-                                {
-                                    <div class="col-md-6">
-                                        <div class="card border-primary my-2">
-                                            <div class="card-body">
-                                                <h5 class="card-title">@speakDak.Dak.Subject</h5>
-                                                <p class="card-text">
-                                                    From: @speakDak.Dak.From <br>
-                                                    Speak Date: @speakDak.MarkedOn.ToShortDateString() <br>
-                                                    Remarks : @speakDak.Remarks
-                                                </p>
-                                                <a href="@Url.Page("/AppUser/UserDakView", new { id = speakDak.DakId })" class="btn btn-primary">View Dak</a>
-                                            </div>
+            <!-- SpeakDaks list starts -->
+            <div class="container my-4">
+                <div class="row">
+
+                    @if (Model.SpeakDakViewModels != null && Model.SpeakDakViewModels.Any())
+                    {
+                        @foreach (var group in Model.SpeakDakViewModels.GroupBy(vm => vm.SpeakDak.MarkedById))
+                        {
+                            var firstViewModel = group.First();
+                            var markedBy = firstViewModel.SpeakDak.MarkedBy;
+
+                            if (markedBy == null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    <i class="bi bi-exclamation-triangle"></i> MarkedBy is null
+                                </div>
+                                continue;
+                            }
+
+                            <!-- Group header -->
+                            <div class="col-12 mb-4">
+                                <h4 class="@firstViewModel.UserRoleColor bg-opacity-25 rounded-pill px-3 py-2 shadow-sm">
+                                    <i class="bi bi-person-fill"></i> Speak requested by @markedBy.Rank @markedBy.FirstName @markedBy.LastName
+                                </h4>
+                            </div>
+
+                            <!-- SpeakDaks -->
+                            @foreach (var viewModel in group)
+                            {
+                                var speakDak = viewModel.SpeakDak;
+
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card border-0 shadow-sm rounded h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><i class="bi bi-chat-dots-fill text-primary"></i> @speakDak.Dak.Subject</h5>
+                                            <p class="card-text text-muted">
+                                                <i class="bi bi-box-arrow-in-down"></i> From: @speakDak.Dak.From <br>
+                                                <i class="bi bi-calendar-check"></i> Speak Date: @speakDak.MarkedOn.ToShortDateString() <br>
+                                                <i class="bi bi-card-text"></i> Remarks: @speakDak.Remarks
+                                            </p>
+                                        </div>
+                                        <div class="card-footer bg-white border-top-0">
+                                            <a href="@Url.Page("/AppUser/UserDakView", new { id = speakDak.DakId })" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye-fill"></i> View Dak</a>
                                         </div>
                                     </div>
-                                }
-                            </div>
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-info" role="alert">
+                            <i class="bi bi-info-circle-fill"></i> No speak cases marked for you as on date.
                         </div>
-                    </div>
-                }
-            }
-            else
-            {
-                <div class="alert alert-info" role="alert">
-                    <i class="fas fa-info-circle"></i> No speak cases marked for you as on date.
+                    }
+
                 </div>
-            }
+            </div>
+            <!-- SpeakDaks list ends -->
+
         </div>
     </div>
 </div>
+
