@@ -434,27 +434,10 @@
 
 
 @section Scripts{
-<script>
-	function ValidateInput(){
-		if(document.getElementById("uploadBox").value==""){
-			Swal.fire({
-			  icon: 'error',
-			  title: 'Oops...',
-			  text: 'It seems you forgot to upload a file!',
-			});
-			return false;
-		}
-		return true;
-	}
-</script>
-<script src="/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-<script>
-      tinymce.init({
-        selector: '#mytextarea'
-      });
-</script>
-
+	<script src="/js/tinymceSetup.js" referrerpolicy="origin"></script>
+	<script src="/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 	@{
-	<partial name="_ValidationScriptsPartial" />
+		<partial name="_ValidationScriptsPartial" />
 	}
 }
+

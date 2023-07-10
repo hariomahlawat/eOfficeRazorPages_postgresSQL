@@ -16,11 +16,14 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Microsoft.AspNetCore.Antiforgery;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHttpContextAccessor();  // Add HttpContextAccessor service
+
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(
@@ -103,7 +106,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 var antiforgery = app.Services.GetRequiredService<IAntiforgery>();
-app.Use((context, next) =>
+app.Use(async (context, next) =>
 {
     var requestPath = context.Request.Path.Value;
 
@@ -119,12 +122,21 @@ app.Use((context, next) =>
                 Secure = true
             });
     }
+    var nonceBytes = new byte[32];
+    using var rng = System.Security.Cryptography.RandomNumberGenerator.Create();
+    rng.GetBytes(nonceBytes);
+    var nonce = Convert.ToBase64String(nonceBytes);
 
+    // Store the nonce in HttpContext items
+    context.Items["ScriptNonce"] = nonce;
 
 
     context.Response.Headers.Add("Content-Security-Policy",
-        "default-src 'none'; connect-src 'self'; font-src 'self'; script-src 'self'; style-src 'self' ;form-action 'self'; frame-src 'self'; frame-ancestors 'self'; img-src 'self' data:; "
+    "default-src 'none'; connect-src 'self'; font-src 'self'; script-src 'self' 'nonce-" + context.Items["ScriptNonce"] + "' ; style-src 'self' 'unsafe-inline' ;form-action 'self'; frame-src 'self' blob:; frame-ancestors 'self'; img-src 'self' data:;"
 );
+
+
+
 
 
 
@@ -132,7 +144,8 @@ app.Use((context, next) =>
     context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
 
-    return next(context);
+    //return next(context);
+    await next.Invoke();
 });
 
 app.UseSession();

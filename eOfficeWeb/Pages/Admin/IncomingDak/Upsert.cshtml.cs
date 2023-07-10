@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using eOffice.DataAccess.Data;
 using eOffice.DataAccess.Repository.IRepository;
@@ -25,7 +26,7 @@ namespace eOfficeWeb.Pages.Admin.IncomingDak
 
         public Dak Dak { get; set; }
 
-        public UpsertModel(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, UserManager<ApplicationUser> userManager, IConfiguration configuration)
+		public UpsertModel(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
@@ -45,8 +46,8 @@ namespace eOfficeWeb.Pages.Admin.IncomingDak
 
         public void OnGetAsync(int? id)
         {
-            
-            localserver = _configuration["ConnectionStrings:HostAddress"];
+
+			localserver = _configuration["ConnectionStrings:HostAddress"];
             Users = _userManager.Users;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             foreach (var user in Users)

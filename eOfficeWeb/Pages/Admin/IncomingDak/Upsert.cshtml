@@ -2,6 +2,8 @@
 @using eOffice.Utility
 @model eOfficeWeb.Pages.Admin.IncomingDak.UpsertModel
 @{
+	
+
 	string coveringLetterUrl =  Model.localserver + Model.Dak.CoveringLetter;
 	string encl1Url = Model.localserver, encl2Url = Model.localserver, encl3Url = Model.localserver;
 	@if (@Model.Dak.Enclosure1 != null)
@@ -19,6 +21,27 @@
 	string pdfpath = coveringLetterUrl;
 }
 
+<style>
+	.btn-width {
+		width: 150px;
+	}
+
+	.text-primary-pl-3 {
+		padding-left: 3rem;
+	}
+
+	.border-p-3-mt-4 {
+		border: 1px solid;
+		padding: 3rem;
+		margin-top: 4rem;
+	}
+
+	.row-pb-2 {
+		padding-bottom: 2rem;
+	}
+
+</style>
+
 @*//Unauthorised User*@
 @if (@Model.LoggedInUser.OfficeBranch == "None" || @Model.LoggedInUser.OfficeBranch == "All")
 {
@@ -27,6 +50,7 @@
 		<span class="text-danger display-4 p-5">
 			You have not been assigned any office branch. Uploading / Editing of Dak is not avail for you.  <br/>
 			Please contact your Admin.
+			</span>
 	</div>
 }
 @*show the dak upload form*@
@@ -38,7 +62,7 @@ else
 			<div class="row pb-2">
 				<div class="col-5">
 					<h2 class="text-primary">
-						<span class="text-primary pl-3 display-6" @*style="font-family: 'Brush Script MT', cursive;"*@>
+						<span class="text-primary pl-3 display-6 cursive-text-heading">
 							@(Model.Dak.Id != 0 ? "Update" : "Upload") Incoming Dak (@Model.LoggedInUser.OfficeBranch)
 						</span>
 						 
@@ -87,7 +111,7 @@ else
 
 						<div class="mb-3 col-6">
 							<label asp-for="Dak.CoveringLetter"></label>
-							<input type="file" name="coveringLetter" id="uploadBox" onchange="    readURL(this);" class="form-control" />
+							<input type="file" name="coveringLetter" id="uploadBoxCoveringLetter" class="form-control" />
 						</div>
 
 
@@ -113,25 +137,26 @@ else
 					</div>
 					@if (Model.Dak.Id != 0)
 					{
-						<button type="submit" class="btn btn-primary" style="width:150px;">Update</button>
+						<button type="submit" class="btn btn-primary btn-width" >Update</button>
 					}
 					else
 					{
-						<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px;">Upload</button>
+						<button type="submit" class="btn btn-primary btn-width"  id="uploadButton">Upload</button>
 					}
-					<a asp-page="Index" asp-route-id="01" class="btn btn-secondary" style="width:150px;"> Back to List</a>
+					<a asp-page="Index" asp-route-id="01" class="btn btn-secondary btn-width"> Back to List</a>
 
 
 				</div>
 				<div class="col-7">
 					@if (Model.Dak.Id != 0)
 					{
-						<iframe id="myFrame" src="@coveringLetterUrl" width="100%" height="600px"> </iframe>
+						<iframe id="myFrame" src="@coveringLetterUrl" class="myFrameClass"> </iframe>
 					}
 					else
 					{
-						<iframe id="myFrame" src="" width="100%" height="600px"> </iframe>
+						<iframe id="myFrame" src="" class="myFrameClass"> </iframe>
 					}
+
 				</div>
 			</div>
 
@@ -141,6 +166,9 @@ else
 		</div>
 
 	</form>
+
+
+
 }
 
 
@@ -148,28 +176,8 @@ else
 
 
 @section Scripts{
-<script>
-	function ValidateInput(){
-		if(document.getElementById("uploadBox").value==""){
-			Swal.fire({
-			  icon: 'error',
-			  title: 'Oops...',
-			  text: 'It seems you forgot to upload a file!',
-			});
-			return false;
-		}
-		return true;
-	}
-
-	function readURL(input) { 
-        if (input.files && input.files[0]) {
-            src = URL.createObjectURL(event.target.files[0]);
-            document.getElementById("myFrame").src = src;
-		}
-	}
-
-</script>
+	<script src="/js/upsertDak.js" referrerpolicy="origin"></script>
 	@{
-	<partial name="_ValidationScriptsPartial" />
+		<partial name="_ValidationScriptsPartial" />
 	}
 }

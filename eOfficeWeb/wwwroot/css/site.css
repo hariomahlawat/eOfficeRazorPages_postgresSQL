@@ -223,6 +223,10 @@ body {
     overflow-y: auto;
 }
 
+.myFrameClass {
+    width: 100%;
+    height: 600px;
+}
 
 
 /* User management styles */
