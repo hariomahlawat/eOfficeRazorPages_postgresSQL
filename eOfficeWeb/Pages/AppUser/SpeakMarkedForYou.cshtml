@@ -9,7 +9,7 @@
             <partial name="_SidebarPartial" />
         </div>
 
-        <div class="col-auto col-md-9">
+        <div class="col-auto col-md-9 col-xl-10">
 
             <!-- SpeakDaks list starts -->
             <div class="container my-4">
@@ -32,9 +32,9 @@
 
                             <!-- Group header -->
                             <div class="col-12 mb-4">
-                                <h4 class="@firstViewModel.UserRoleColor bg-opacity-25 rounded-pill px-3 py-2 shadow-sm">
+                                <h5 class="@firstViewModel.UserRoleColor bg-opacity-25 rounded-pill px-3 py-2 shadow-sm">
                                     <i class="bi bi-person-fill"></i> Speak requested by @markedBy.Rank @markedBy.FirstName @markedBy.LastName
-                                </h4>
+                                </h5>
                             </div>
 
                             <!-- SpeakDaks -->
@@ -45,7 +45,7 @@
                                 <div class="col-lg-4 col-md-6 mb-4">
                                     <div class="card border-0 shadow-sm rounded h-100">
                                         <div class="card-body">
-                                            <h5 class="card-title"><i class="bi bi-chat-dots-fill text-primary"></i> @speakDak.Dak.Subject</h5>
+                                            <h6 class="card-title"><i class="bi bi-chat-dots-fill text-primary"></i> @speakDak.Dak.Subject</h6>
                                             <p class="card-text text-muted">
                                                 <i class="bi bi-box-arrow-in-down"></i> From: @speakDak.Dak.From <br>
                                                 <i class="bi bi-calendar-check"></i> Speak Date: @speakDak.MarkedOn.ToShortDateString() <br>

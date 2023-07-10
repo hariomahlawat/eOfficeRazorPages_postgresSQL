@@ -8,7 +8,7 @@
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
             <partial name="_SidebarPartial" />
         </div>
-        <div class="col-auto col-md-9 px-4">
+        <div class="col-auto col-md-9 col-xl-10 px-4">
             @if (Model.SpeakDaks != null && Model.SpeakDaks.Any())
             {
                 @foreach (var group in Model.SpeakDaks.GroupBy(s => s.MarkedForId))
@@ -24,7 +24,7 @@
                     }
                     <div class="card mb-4 shadow">
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h5 class="m-0 font-weight-bold text-primary">
+                            <h5 class="m-0 font-weight-bold text-danger">
                                 <i class="fas fa-user"></i> Awaiting speak session with  @markedFor.Rank @markedFor.FirstName @markedFor.LastName
                             </h5>
                         </div>
@@ -37,9 +37,9 @@
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                        <h6 class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                             <i class="fas fa-comment-alt"></i> @speakDak.Dak.Subject
-                                                        </div>
+                                                        </h6>
                                                         <div class="mb-1 text-gray-800">
                                                             <i class="fas fa-user"></i> From: @speakDak.Dak.From
                                                         </div>
