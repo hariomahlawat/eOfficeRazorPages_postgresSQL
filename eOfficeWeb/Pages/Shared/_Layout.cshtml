@@ -79,7 +79,10 @@
             </div>
         </nav>
     </header>
+    <div id="success-message" style="display:none;" data-message="@TempData["success"]"></div>
+    <div id="error-message" style="display:none;" data-message="@TempData["error"]"></div>
     <div class="container-fluid">
+
         <main role="main" class="">
             <partial name="_Notification" />
             @RenderBody()
@@ -98,6 +101,8 @@
     <script nonce="@Context.Items["ScriptNonce"]" src="~/toastr/toastr.min.js"></script>
     <script nonce="@Context.Items["ScriptNonce"]" src="~/sweetalert2/sweetalert2@11.js"></script>
     <script src="~/fullcalendar/moment.min.js"></script>
+    <script nonce="@Context.Items["ScriptNonce"]" src="~/js/site.js"> </script>
+
 
 
     @await RenderSectionAsync("Scripts", required: false)
