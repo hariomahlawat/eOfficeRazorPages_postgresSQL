@@ -179,7 +179,7 @@
                                                 <tbody>
                                                     @if (@Model.CountUpcomingEvents == 0)
                                                     {
-                                                        <span class="fs-6">No upcoming events in next week.</span>
+                                                        <span class="fs-6">Clear skies ahead! There are no events on your calendar for the next 30 days. Time for some well-deserved rest!</span>
                                                     }
                                                     @foreach (var obj in Model.Events)
                                                     {
@@ -208,7 +208,7 @@
                                                 <tbody>
                                                     @if (@Model.CountSocialCalendarWeek == 0)
                                                     {
-                                                        <span class="fs-6">No upcoming birthday / anniversary</span>
+                                                        <span class="fs-6">We're in a celebration lull! There are no birthdays or anniversaries scheduled for the next 30 days. Make the most of this quiet time!</span>
                                                     }
                                                     @foreach (var socialCalendar in Model.SocialCalendarWeek)
                                                     {
