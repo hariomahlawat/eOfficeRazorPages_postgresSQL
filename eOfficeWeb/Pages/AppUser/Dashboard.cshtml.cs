@@ -119,7 +119,7 @@ namespace eOfficeWeb.Pages.AppUser
                         && u.DateReceived.Month == DateTime.Today.Month
                         && u.DateReceived.Day == DateTime.Today.Day
                     );
-                DakRecentFive = DakWeek.Take(5);
+                //DakRecentFive = DakWeek.Take(5);
                 CountDakToday = DakToday.Count();
 
                 //count unseen Dak
@@ -128,15 +128,16 @@ namespace eOfficeWeb.Pages.AppUser
                 var dakCommentsIds = DakComments.Select(u => u.DakId).ToArray();
                 UnseenDak = Dak.Where(u => !dakCommentsIds.Contains(u.Id) && u.DateReceived > DateTime.Now.Subtract(new TimeSpan(15, 0, 0, 0, 0)));
                 CountUnseenDak = UnseenDak.Count();
+
+                DakRecentFive = UnseenDak.Take(5);
             }
             
 
             //----------------------------------------------------------------------------------------------------------
             SocialCalendarWeek = _unitOfWork.socialCalendar.GetAll().Where(
-                u => u.EventDate.Month == DateTime.Today.Month
-                && u.EventDate.Day >= DateTime.Today.Day
-                && u.EventDate.Day < DateTime.Today.Day + 7
-                ).OrderBy(u=>u.EventDate.Day);
+            u => u.EventDate >= DateTime.Today && u.EventDate < DateTime.Today.AddDays(30)
+            ).OrderBy(u => u.EventDate);
+
             SocialCalendarToday = SocialCalendarWeek.Where(
                     u => u.EventDate.Month == DateTime.Today.Month
                     && u.EventDate.Day == DateTime.Today.Day
@@ -150,7 +151,7 @@ namespace eOfficeWeb.Pages.AppUser
             CountDelayedTask = ToDoList.Where(u=> u.CompletionTime < DateTime.Now && u.CompletionTime.ToString("dd MMMM yyyy") != "01 January 0001").Count();
 
             //get events
-            Events = _unitOfWork.EventCalendar.GetAll().Where(u => u.Start.Day >= DateTime.Today.Day && u.Start.Day < DateTime.Today.Day + 7);
+            Events = _unitOfWork.EventCalendar.GetAll().Where(u => u.Start.Day >= DateTime.Today.Day && u.Start.Day < DateTime.Today.Day + 30);
             CountUpcomingEvents = Events.Count();
 
             //get speak cases

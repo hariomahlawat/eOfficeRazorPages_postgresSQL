@@ -218,6 +218,12 @@ body {
     font-size: 2rem;
 }
 
+.fixed-height-row {
+    max-height: 250px; /* You can adjust this value to suit your needs */
+    overflow-y: auto;
+}
+
+
 
 /* User management styles */
 .hidden {

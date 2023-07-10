@@ -31,8 +31,8 @@
                         }
                     }
 
-                    <div class="container mt-4">
-                        <h3 class="text-center mb-4"><i class="bi bi-bell-fill text-primary"></i> Notification Centre</h3>
+                    <div class="container mt-2">
+                        @*<h3 class="text-center mb-4"><i class="bi bi-bell-fill text-primary"></i> Notification Centre</h3>*@
                         <div class="row">
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card notification-card border-0 shadow-sm bg-light">
@@ -115,120 +115,122 @@
                   @*Notification row ends*@
 
                    @*row below notificaton*@ 
-                   <div class="row  ">
 
-                        <div id="accordion" class="my-3">
-                          <div class="card">
-                            <div class="card-header ">
-                              <a class="btn text-black" data-bs-toggle="collapse" href="#collapseRecentDak">
-                                <h5><i class="fa-solid fa-envelope-open-text icon-envelope" ></i> Recent Dak Received</h5>
-                              </a>
-                            </div>
-                            <div id="collapseRecentDak" class="collapse show" data-bs-parent="#accordion">
-                              <div class="card-body">
-                                @*//Unauthorised User*@
+
+                    <div class="container my-4">
+                        <div class="row">
+
+                            <div class="col-lg-12 mb-4">
+                                <div class="card border-0 shadow-sm bg-white rounded">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-primary"><i class="fa-solid fa-envelope-open-text icon-envelope"></i> Recently Received Dak: Your 5 Latest Unread</h4>
+                                        <!-- Recent Dak Received Data -->
                                         @if (@Model.LoggedInUser.OfficeBranch == "None" || (Model.LoggedInUser.OfficeBranch != "All" && @Model.LoggedInUser.OfficeBranchSection == "None"))
-	                            {
-		                            <div class="justify-content-center text-center p-5">
-		
-			                            <span class="text-danger display-6 p-5">
-				                            Allocated Office branch or Section is not in order. You are locked out from Dak Module.<br/>
-				                            Please contact your Admin.
-		                            </div>
-	                            }
-                                else
-                                {
-                                <table class="table  p-0 m-0">
-                                    <tbody>
-                                        @foreach(var dak in Model.DakRecentFive)
                                         {
-                                            <tr>
-                                                <td>
-                                                    <strong>Subject - </strong><strong class="text-primary"> @dak.Subject</strong><br/>
-                                                    <span class="text-secondary ">Letter No @dak.LetterNo dated @dak.LetterDate.ToString("dd MMMM yyyy")</span><br/>
-                                                    Received from <span class="text-success fw-bold">@dak.From</span> on @dak.DateReceived.ToString("dd MMMM yyyy")
-                                                </td>
-                                                <td class="" width="10%">
-                                                    <center class="">
-                                                        <a asp-page="UserDakView" asp-route-id="@dak.Id"  class="btn btn-sm btn-outline-success mx-2">
-							                            <i class="fa-solid fa-eye"></i> View
-						                            </a>
-                                                    </center>
-                                                </td>
-                                            </tr>         
+                                            <div class="justify-content-center text-center p-5  fixed-height-row">
+                                                <span class="text-danger display-6 p-5">
+                                                    Allocated Office branch or Section is not in order. You are locked out from Dak Module.<br />
+                                                    Please contact your Admin.
+                                                </span>
+                                            </div>
                                         }
-                                    </tbody>
-                                </table>
-                                }
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div id="accordion" class="my-3">
-                          <div class="card">
-                            <div class="card-header">
-                              <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTwo">
-                                <h5><i class="fa-solid fa-calendar-days icon-calendar"></i> Upcoming Events (Next Week)</h5>
-                              </a>
-                            </div>
-                            <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
-                              <div class="card-body">
-                                <table class="table  p-0 m-0">
-                                    <tbody>
-                                        @if (@Model.CountUpcomingEvents==0)
-                                                {
-                                                    <span class="fs-6">No upcoming events in next week.</span>
-                                                }
-                                        @foreach(var obj in Model.Events)
+                                        else
                                         {
-                                            <tr>
-                                                <td>
-                                                    <h6 class="text-secondary"><i class="fa-solid fa-square" style="color:@obj.ThemeColor"></i>
-                                                        @obj.Subject - Starting on @obj.Start.ToString("dddd, dd MMMM yyyy hh:mm tt")
-                                                    </h6><br/>
-                                                </td>
-                                            </tr>         
-                                        }
-                                    </tbody>
-                                </table>
-                              </div>
+                                        <div class="row fixed-height-row">
+                                            <table class="table p-0 m-0">
+                                                    <tbody>
+                                                        @if (@Model.DakRecentFive.Count() == 0)
+                                                        {
+                                                            <span class="fs-6">You have seen all recd daks.</span>
+                                                        }
+                                                        @foreach (var dak in Model.DakRecentFive)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>Subject - </strong><strong class="text-primary"> @dak.Subject</strong><br />
+                                                                    <span class="text-secondary ">Letter No @dak.LetterNo dated @dak.LetterDate.ToString("dd MMMM yyyy")</span><br />
+                                                                    Received from <span class="text-success fw-bold">@dak.From</span> on @dak.DateReceived.ToString("dd MMMM yyyy")
+                                                                </td>
+                                                                <td class="" width="10%">
+                                                                    <center class="">
+                                                                        <a asp-page="UserDakView" asp-route-id="@dak.Id" class="btn btn-sm btn-outline-success mx-2">
+                                                                            <i class="fa-solid fa-eye"></i> View
+                                                                        </a>
+                                                                    </center>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                                                                    }
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <div class="card border-0 shadow-sm bg-white rounded">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-primary"><i class="fa-solid fa-calendar-days icon-calendar"></i> Events Scheduled for the Next 30 Days</h4>
+                                        <!-- Upcoming Events (Next Week) Data -->
+                                        <div class="row fixed-height-row">
+                                            <table class="table p-0 m-0">
+                                                <tbody>
+                                                    @if (@Model.CountUpcomingEvents == 0)
+                                                    {
+                                                        <span class="fs-6">No upcoming events in next week.</span>
+                                                    }
+                                                    @foreach (var obj in Model.Events)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="text-secondary">
+                                                                    <i class="fa-solid fa-square" style="color:@obj.ThemeColor"></i>
+                                                                    @obj.Subject - Starting on @obj.Start.ToString("dddd, dd MMMM yyyy hh:mm tt")
+                                                                </h6><br />
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div class="card border-0 shadow-sm bg-white rounded">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-primary"><i class="fa-solid fa-cake-candles icon-cake-candles"></i> Social Calendar for the Coming 30 Days</h4>
+                                        <!-- Social Calendar Data -->
+                                        <div class="row fixed-height-row">
+                                            <table class="table  p-0 m-0">
+                                                <tbody>
+                                                    @if (@Model.CountSocialCalendarWeek == 0)
+                                                    {
+                                                        <span class="fs-6">No upcoming birthday / anniversary</span>
+                                                    }
+                                                    @foreach (var socialCalendar in Model.SocialCalendarWeek)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <h6 class="text-secondary">
+                                                                    <i class="bi bi-balloon" style="color:red"></i><i class="bi bi-balloon" style="color:gold"></i>
+                                                                    @socialCalendar.EventDate.ToString("dd MMMM ") - @socialCalendar.EventType of @socialCalendar.Name
+                                                                </h6><br>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div id="accordion" class="my-3">
-                          <div class="card">
-                            <div class="card-header">
-                              <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseThree">
-                                <h5><i class="fa-solid fa-cake-candles icon-cake-candles"></i> Social Calendar</h5>
-                              </a>
-                            </div>
-                            <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
-                              <div class="card-body">
-                                <table class="table  p-0 m-0">
-                                    <tbody>
-                                        @if (@Model.CountSocialCalendarWeek==0)
-                                                {
-                                                    <span class="fs-6">No upcoming birthday / anniversary</span>
-                                                }
-                                        @foreach(var socialCalendar in Model.SocialCalendarWeek)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <h6 class="text-secondary"><i class="bi bi-balloon"style="color:red"></i><i class="bi bi-balloon" style="color:gold"></i> 
-                                                        @socialCalendar.EventDate.ToString("dd MMMM ") - @socialCalendar.EventType of @socialCalendar.Name</h6><br/>
-                                                </td>
-                                            </tr>         
-                                        }
-                                    </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                   </div>  
+
                    @*row below notificaton ends*@   
                
                 </div> 
