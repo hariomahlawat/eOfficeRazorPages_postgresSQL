@@ -11,6 +11,7 @@ using Microsoft.CodeAnalysis.Completion;
 
 namespace eOfficeWeb.Pages.AppUser
 {
+    [Authorize]
     public class SpeakMarkedByYouModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
